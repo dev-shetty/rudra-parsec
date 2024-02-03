@@ -6,33 +6,12 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 const Navbar: React.FC = () => {
-  const [isNavVisible, setIsNavVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const isVisible = scrollPosition > 100; // Adjust this value based on when you want the navbar to appear
-
-      setIsNavVisible(isVisible);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <nav
-      className={`fixed select-none z-50 mt-3 top-0 left-0 flex justify-center w-full items-center py-4 md:px-5 transition-opacity duration-300 ${
-        isNavVisible ? "opacity-100" : "opacity-0 hidden"
-      }`}
+      className={`fixed select-none z-50 mt-3 top-0 left-0 flex justify-center w-full items-center py-4 md:px-5 transition-opacity duration-300`}
     >
-      <div className="container flex justify-between items-center rounded-full bg-background/70 border border-input py-4 backdrop-blur-md">
+      <div className="container mx-5 flex justify-between items-center rounded-full bg-background/70 border border-input py-4 backdrop-blur-md">
         <Linkk href="/">
-          {/* <Image src="/icon.svg" width={50} height={50} alt="codeblaze" /> */}
           <p className="flex text-lg font-bold justify-center items-center gap-1">
             Finvest
             <svg
@@ -50,7 +29,7 @@ const Navbar: React.FC = () => {
         </Linkk>
         <ul className="flex tracking-wider justify-end">
           <li className="mr-6 cursor-pointer hover:underline underline-offset-4">
-            <Linkk href="/login">Login</Linkk>
+            <Linkk href="/pot/dashboard">Pots</Linkk>
           </li>
         </ul>
       </div>

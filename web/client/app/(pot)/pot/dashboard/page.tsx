@@ -2,6 +2,7 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import Navbar from "@/components/Pots/Navbar";
 
 const CardData = [
   {
@@ -42,7 +43,8 @@ const page = () => {
   };
 
   return (
-    <div className="my-20">
+    <div className="py-36 min-h-screen">
+      <Navbar />
       <div className="font-semibold md:text-5xl text-4xl text-center mb-10">
         My Pots
       </div>

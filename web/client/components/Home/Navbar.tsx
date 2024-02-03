@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
         isNavVisible ? "opacity-100" : "opacity-0 hidden"
       }`}
     >
-      <div className="container flex justify-between items-center rounded-full bg-background/70 border border-input py-4 backdrop-blur-md">
+      <div className="container mx-5 flex justify-between items-center rounded-full bg-background/70 border border-input py-4 backdrop-blur-md">
         <Linkk href="/">
           {/* <Image src="/icon.svg" width={50} height={50} alt="codeblaze" /> */}
           <p className="flex text-lg font-bold justify-center items-center gap-1">
@@ -49,6 +49,15 @@ const Navbar: React.FC = () => {
           </p>
         </Linkk>
         <ul className="flex tracking-wider justify-end">
+          <li className="mr-6 cursor-pointer hover:underline underline-offset-4">
+            <Linkk href="/pot/dashboard">Pots</Linkk>
+          </li>
+          <li className="mr-6 cursor-pointer hover:underline underline-offset-4">
+            <Linkk href="/news">News</Linkk>
+          </li>
+          <li className="mr-6 cursor-pointer hover:underline underline-offset-4">
+            <Linkk href="/education">Education</Linkk>
+          </li>
           <li className="mr-6 cursor-pointer hover:underline underline-offset-4">
             <Linkk href="/login">Login</Linkk>
           </li>

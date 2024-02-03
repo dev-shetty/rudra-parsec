@@ -1,107 +1,101 @@
-"use server"
+"use client";
+import React from "react";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import Navbar from "@/components/Pots/Navbar";
 
-import { getUser } from "@/app/actions"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { Textarea } from "@/components/ui/textarea"
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import Image from "next/image"
+const CardData = [
+  {
+    id: 1,
+    amount: "1000",
+    pot_id: "pot_brlozecf4",
+    members: [
+      "Name 1",
+      "Name 2",
+      "Name 3",
+      "Name 1",
+      "Name 2",
+      "Name 3",
+      "Name 1",
+    ],
+    month: "9 / 11",
+  },
+  {
+    id: 1,
+    amount: "1000",
+    pot_id: "pot_brlozecf4",
+    members: ["Name 1", "Name 2", "Name 3", "Name 1"],
+    month: "9 / 11",
+  },
+];
 
-export default async function AccountPage() {
-  const user = await getUser()
+const page = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`;
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.background = "#d1f2f900";
+  };
 
   return (
-    <main className="flex flex-col w-full lg:flex-row gap-6 p-6">
-      <section className="w-full lg:w-1/2">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Profile</CardTitle>
-            <CardDescription>Update your profile information.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Enter your name" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="age">Age</Label>
-              <Input id="age" placeholder="Enter your age" type="number" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="dob" className="mx-2">
-                Date of Birth
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    className="pl-3 text-left font-normal text-gray-500 dark:text-gray-400"
-                    variant="outline"
-                  >
-                    Pick a date
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="w-auto p-0">
-                  <Calendar mode="single" />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="address">Address</Label>
-              <Textarea
-                className="min-h-[100px]"
-                id="address"
-                placeholder="Enter your address"
-              />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button className="ml-auto">Save</Button>
-          </CardFooter>
-        </Card>
-      </section>
-      <section className="w-full lg:w-1/2">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>User Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-9 w-9">
-                <AvatarImage
-                  alt={user?.user_metadata.name}
-                  src={user?.user_metadata.avatar_url}
-                />
-                <AvatarFallback>
-                  {user?.user_metadata.name.split("")[0]}
-                </AvatarFallback>
-              </Avatar>
-              <div className="grid gap-0.5 text-xs">
-                <div className="font-medium">{user?.user_metadata.name}</div>
-                <div className="text-gray-500 dark:text-gray-400">
-                  {user?.user_metadata.email}
+    <div className="py-36 min-h-screen">
+      <Navbar />
+      <div className="font-semibold md:text-5xl text-4xl text-center mb-10">
+        My Pots
+      </div>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-10 gap-5 max-w-7xl p-5">
+        {CardData.map((card) => (
+          <Link
+            href={`/pot/dashboard/${card.pot_id}`}
+            key={card.id}
+            className="relative w-80 min-h-96 overflow-hidden"
+            style={{
+              height: `calc(${card.members.length * 30}px)`, // Adjust the factor (40px) as needed
+            }}
+          >
+            <div className="absolute h-full inset-0 bg-gradient-to-br from-blue-500 via-[#f6cbc5] to-[#df8175] rounded-3xl p-1 z-5">
+              <div className="bg-black w-full rounded-[1.25rem] h-full">
+                <div
+                  className="rounded-2xl flex flex-col justify-center items-center p-5 h-full"
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="flex text-xl mb-3">{card.pot_id}</div>
+                  <div className="flex items-center flex-col gap-1 mb-5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="60"
+                      height="60"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M11 5v3h2V5zM4.91 7.5L3.5 8.91l1.77 1.77l1.41-1.41zm14.18 0l-1.77 1.77l1.41 1.41l1.77-1.77zM4 12c0 2.86 1.5 5.5 4 6.93s5.5 1.43 8 0s4-4.07 4-6.93z"
+                      />
+                    </svg>
+                    <div className="text-xl font-bold">{card.amount} ₹</div>
+                  </div>
+                  <div className="flex justify-center items-center flex-wrap gap-2 text-lg mb-3">
+                    {card.members.map((member, index) => (
+                      <Badge key={index}>{member}</Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center flex-col gap-1 mt-1">
+                    Months remaining: {card.month}
+                  </div>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </section>
-    </main>
-  )
-}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default page;
