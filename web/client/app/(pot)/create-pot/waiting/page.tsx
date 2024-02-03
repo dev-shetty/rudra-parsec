@@ -56,9 +56,14 @@ const Page = () => {
     >
       <motion.h1 variants={FADE_UP_ANIMATION_VARIANTS}>
         <div className="lg:p-8">
+          <div className="fixed top-0 left-0 m-5 z-50">
+            <Link href="/create-pot">
+              <Button variant={"ghost"}>Back</Button>
+            </Link>
+          </div>
           <div className="mx-auto flex flex-col justify-center space-y-6 w-[350px]">
             <div className="max-w-7xl flex flex-col gap-5">
-              <h1 className="font-semibold text-2xl">POT Created!</h1>
+              <h1 className="font-semibold text-3xl">POT Created!</h1>
               {/* Display the generated unique ID */}
 
               <div className="flex relative items-center">
