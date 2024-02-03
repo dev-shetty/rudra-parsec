@@ -8,13 +8,13 @@ import { Calendar } from "@/components/ui/calendar";
 
 const Page = () => {
   const [members, setMembers] = useState([
-    { name: "Srajan", rupees: 4000, role: "Creator" },
-    { name: "Kumar", rupees: 4000 },
+    { name: "Srajan", rupees: 5000, role: "Creator" },
+    { name: "Deveesh", rupees: 5000 },
     // Add more members as needed
   ]);
 
   const [totalAmount, setTotalAmount] = useState(10000);
-  const [rupeesPerMonth, setRupeesPerMonth] = useState(1000);
+  const [rupeesPerMonth, setRupeesPerMonth] = useState(10000);
   const [monthsRemaining, setMonthsRemaining] = useState(5);
   const [nextPerson, setNextPerson] = useState("Srajan Kumar");
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -57,7 +57,7 @@ const Page = () => {
       <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
         <div className="relative h-full flex-col text-white flex">
           <div className="lg:p-8">
-            <div className="mx-auto flex flex-col justify-center space-y-6 w-[350px]">
+            <div className="mx-auto flex flex-col justify-center space-y-6 w-[500px]">
               <form className="max-w-7xl flex flex-col gap-5">
                 <h1 className="font-semibold text-2xl">Members on Pot</h1>
 
