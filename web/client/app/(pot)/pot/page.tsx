@@ -1,20 +1,16 @@
-"use client";
-
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+} from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
+import React from "react"
 const page = () => {
-  const [loading, isLoading] = useState(false);
+  
   return (
     <div className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted text-white lg:flex">
@@ -67,7 +63,7 @@ const page = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default page;
+export default page
