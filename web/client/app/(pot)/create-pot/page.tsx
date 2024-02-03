@@ -104,7 +104,7 @@ const page = () => {
       }}
     >
       <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
-        <div className="relative hidden h-full flex-col bg-muted text-white lg:flex">
+        <div className="relative hidden h-full flex-col text-white lg:flex">
           <img
             // quality={100}
             // priority
@@ -117,7 +117,7 @@ const page = () => {
         </div>
       </motion.h1>
       <motion.h1 variants={FADE_UP_ANIMATION_VARIANTS}>
-        <div className="lg:p-8">
+        <div className="lg:p-8 flex min-h-screen justify-center items-center">
           <div className="mx-auto flex flex-col justify-center space-y-6 w-[350px]">
             <form className="max-w-7xl flex flex-col gap-5">
               <h1 className="font-semibold text-2xl">Create Pot</h1>
