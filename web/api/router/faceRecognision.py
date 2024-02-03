@@ -1,10 +1,10 @@
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks
 from fastapi.responses import StreamingResponse
 import cv2
 import threading
 from deepface import DeepFace
 
-app = FastAPI()
+app = APIRouter()
 
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -12,7 +12,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 counter = 0
 face_match = False
-reference_img = cv2.imread("akkil.jpg")
+reference_img = cv2.imread("./assets/akkil.jpg")
 
 def check_face(frame):
     global face_match
@@ -53,7 +53,3 @@ def generate_frames():
 @app.on_event("shutdown")
 def shutdown_event():
     cap.release()
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)

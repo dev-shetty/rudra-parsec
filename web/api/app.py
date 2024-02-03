@@ -3,30 +3,19 @@
 # License: GNU General Public License v3.0
 
 
-import uvicorn, io, requests
+import uvicorn
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from typing import Optional
-from PIL import Image, ImageDraw, ImageFont
-from config import *
 
 import router.app_router as app_router
 
 app = FastAPI(
-    title="Meme Maker API",
-    description="This is an application as a service to create memes.",
-    version="0.0.2",
-    contact={
-        "name": "Akkil M G",
-        "url": "http://github.com/HeimanPictures",
-    },
-    license_info={
-        "name": "GNU GENERAL PUBLIC License v3.0",
-        "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
-    },
-    docs_url="/akkil/docs"
+    title="Finvest API",
+    description="This is an application as a service related Financial. It provides awareness and educate the users.",
+    version="0.0.1",    
+    docs_url="/docs"
 )
 
 origins = [
