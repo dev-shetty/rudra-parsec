@@ -14,12 +14,8 @@ export const metadata: Metadata = {
     default: "Finvest",
     template: `%s | Finvest`,
   },
-  description: "Finvest: Emerge Financiakky Fulfilled",
-  keywords: [
-    "financial education",
-    "pots",
-    "invest together"
-  ]
+  description: "Finvest: Emerge Financially Fulfilled.",
+  keywords: ["financial education", "pots", "invest together"],
 };
 
 export default function RootLayout({

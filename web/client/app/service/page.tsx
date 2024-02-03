@@ -109,10 +109,6 @@ const CardData = [
   },
 ];
 
-export const metadata = {
-  title: "Service"
-}
-
 const Cards = () => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -130,7 +126,7 @@ const Cards = () => {
     <div className="min-h-screen flex justify-center items-center">
       <Navbar />
       <div className="lg:mt-16 pt-5 mt-24">
-        <div className="font-semibold text-4xl md:text-5xl text-center mb-10">
+        <div className="font-semibold text-4xl text-center mb-10">
           Our Services
         </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-10 gap-5 max-w-7xl p-5">
