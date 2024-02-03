@@ -96,6 +96,44 @@ export interface Database {
           }
         ]
       }
+      user: {
+        Row: {
+          address: string | null
+          age: number | null
+          auth_id: string | null
+          created_at: string
+          dob: string | null
+          id: number
+          name: string | null
+        }
+        Insert: {
+          address?: string | null
+          age?: number | null
+          auth_id?: string | null
+          created_at?: string
+          dob?: string | null
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          address?: string | null
+          age?: number | null
+          auth_id?: string | null
+          created_at?: string
+          dob?: string | null
+          id?: number
+          name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_auth_id_fkey"
+            columns: ["auth_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

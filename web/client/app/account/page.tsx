@@ -1,6 +1,6 @@
 "use server"
 
-import Navbar from "@/components/Pots/Navbar"
+import { getUser } from "@/app/actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -25,13 +25,6 @@ import { cookies } from "next/headers"
 import Image from "next/image"
 
 export default async function AccountPage() {
-  const supabase = createServerActionClient({ cookies })
-  async function getUser() {
-    "use server"
-    const user = await supabase.auth.getUser()
-    return user.data.user
-  }
-
   const user = await getUser()
 
   return (
@@ -93,10 +86,10 @@ export default async function AccountPage() {
               <Avatar className="h-9 w-9">
                 <AvatarImage
                   alt={user?.user_metadata.name}
-                  // src={user?.user_metadata.avatar_url}
+                  src={user?.user_metadata.avatar_url}
                 />
                 <AvatarFallback>
-                  {user?.user_metadata.name.split(" ")[0]}
+                  {user?.user_metadata.name.split("")[0]}
                 </AvatarFallback>
               </Avatar>
               <div className="grid gap-0.5 text-xs">

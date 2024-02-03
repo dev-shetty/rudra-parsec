@@ -1,48 +1,84 @@
-"use client";
-import { motion, useInView } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+"use client"
+import { getUser } from "@/app/actions"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { motion, useInView } from "framer-motion"
+import { redirect } from "next/navigation"
+import React, { useEffect, useState } from "react"
 
 const page = () => {
-  const [loading, isLoading] = useState(false);
+  const [loading, isLoading] = useState(false)
+  const [user, setUser] = useState<any>(null)
+
+  const fetchUser = async () => {
+    const user = await getUser()
+    setUser(user)
+  }
+
+  console.log(user?.user_metadata.name)
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      creator: user?.user_metadata.name,
+    }))
+  }, [user])
+
+  const supabase = createClientComponentClient()
 
   const [formData, setFormData] = useState({
     purpose: "",
-    creator: "",
+    creator: user?.user_metadata.name ?? "",
     numberOfMembers: "",
     goalAmount: "",
     amountPerHead: "",
-  });
+  })
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    isLoading(true);
-    // You can perform form submission logic here
-    console.log("Form submitted:", formData);
-    isLoading(false);
-  };
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    isLoading(true)
 
-  const ref = React.useRef(null);
-  const isInView = useInView(ref) as boolean;
+    const potData = {
+      purpose: formData.purpose,
+      creator: user?.id,
+      goal_amount: formData.goalAmount,
+      amount_per_head: formData.amountPerHead,
+      members: [],
+    }
+
+    console.log(potData)
+
+    // You can perform <for></for>m submission logic here
+
+    console.log("Form submitted:", formData)
+    isLoading(false)
+  }
+
+  const ref = React.useRef(null)
+  const isInView = useInView(ref) as boolean
 
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
   const FADE_UP_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
   return (
     <motion.div
       className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
@@ -95,8 +131,8 @@ const page = () => {
                 <Input
                   name="creator"
                   value={formData.creator}
-                  onChange={handleInputChange}
-                  disabled={loading}
+                  // onChange={handleInputChange}
+                  disabled
                   placeholder="Creator"
                   type="text"
                   className="w-full"
@@ -195,7 +231,7 @@ const page = () => {
         </div>
       </motion.h1>
     </motion.div>
-  );
-};
+  )
+}
 
-export default page;
+export default page
