@@ -11,6 +11,7 @@ declare module "jspdf" {
     ): jsPDF;
     setFontSize(size: number): jsPDF;
     setFont(size: string): jsPDF;
+    save(size: string): jsPDF;
 
     // Add other methods and properties you use from jsPDF here
   }
