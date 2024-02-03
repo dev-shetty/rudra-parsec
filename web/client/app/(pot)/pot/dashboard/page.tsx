@@ -1,85 +1,53 @@
-"use client"
-import { getUser } from "@/app/actions"
-import Navbar from "@/components/Pots/Navbar"
-import { Badge } from "@/components/ui/badge"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import React, { useEffect, useState } from "react"
-
-const CardData = [
-  {
-    id: 1,
-    amount: "1000",
-    pot_id: "pot_brlozecf4",
-    members: [
-      "Name 1",
-      "Name 2",
-      "Name 3",
-      "Name 1",
-      "Name 2",
-      "Name 3",
-      "Name 1",
-    ],
-    month: "9 / 11",
-  },
-  {
-    id: 1,
-    amount: "1000",
-    pot_id: "pot_brlozecf4",
-    members: ["Name 1", "Name 2", "Name 3", "Name 1"],
-    month: "9 / 11",
-  },
-  {
-    id: 1,
-    amount: "1000",
-    pot_id: "pot_brlozecf4",
-    members: ["Name 1", "Name 2", "Name 3", "Name 1"],
-    month: "9 / 11",
-  },
-]
+"use client";
+import { getUser } from "@/app/actions";
+import Navbar from "@/components/Navbar";
+import { Badge } from "@/components/ui/badge";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
-  const [user, setUser] = useState<any>()
-  const [pots, setPots] = useState<any[]>([])
-  const supabase = createClientComponentClient()
+  const [user, setUser] = useState<any>();
+  const [pots, setPots] = useState<any[]>([]);
+  const supabase = createClientComponentClient();
 
   const fetchUser = async () => {
-    const user = await getUser()
-    if (!user) redirect("/login")
-    setUser(user)
-  }
+    const user = await getUser();
+    if (!user) redirect("/login");
+    setUser(user);
+  };
 
   useEffect(() => {
-    fetchUser()
-  }, [])
+    fetchUser();
+  }, []);
 
   useEffect(() => {
-    getPots()
-  }, [user])
+    getPots();
+  }, [user]);
 
   async function getPots() {
-    if (!user) return
+    if (!user) return;
     const { data, error } = await supabase
       .from("pot")
       .select()
-      .contains("members", [user.id])
+      .contains("members", [user.id]);
 
-    console.log({ data, error })
-    setPots(data!)
+    console.log({ data, error });
+    setPots(data!);
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`
-  }
+    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`;
+  };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.background = "#d1f2f900"
-  }
+    e.currentTarget.style.background = "#d1f2f900";
+  };
 
   return (
     <div className="py-36 min-h-screen">
@@ -145,7 +113,7 @@ const page = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

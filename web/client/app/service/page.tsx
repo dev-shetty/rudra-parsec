@@ -46,7 +46,7 @@ const CardData = [
 
   {
     id: 3,
-    link: "/education",
+    link: "/educate",
     title: "Education",
     icon: (
       <svg

@@ -72,7 +72,7 @@ function Navbar() {
                           News
                         </Link>
                         <Link
-                          href="/education"
+                          href="/educate"
                           className="hover:bg-input w-full flex px-2 py-3"
                         >
                           Education
