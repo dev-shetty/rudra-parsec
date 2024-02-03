@@ -52,3 +52,7 @@ pyOpenSSL==17.5.0
 PyYAML==3.12
 requests==2.22.0
 web3
+fastapi[all]==0.68.0
+uvicorn==0.15.0
+opencv-python==4.5.3
+deepface==0.0.68
