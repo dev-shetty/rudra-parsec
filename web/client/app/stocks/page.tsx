@@ -83,6 +83,10 @@
 // pages/index.tsx
 import { CardsMetric } from "@/components/Stocks/CardsMetrix";
 
+export const metadata = {
+  title: "Stocks"
+}
+
 const HomePage: React.FC = () => {
   const stockData = [
     { average: 400, today: 240 },

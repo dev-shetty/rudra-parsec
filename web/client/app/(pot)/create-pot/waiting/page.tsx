@@ -8,6 +8,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+
+export const metadata = {
+  title: "Pot"
+}
+
+
 const Page = () => {
   const searchParams = useSearchParams();
   const potCode = searchParams.get("pot_code");

@@ -109,6 +109,10 @@ const CardData = [
   },
 ];
 
+export const metadata = {
+  title: "Service"
+}
+
 const Cards = () => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

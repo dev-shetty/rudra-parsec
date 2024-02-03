@@ -11,6 +11,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 
+export const metadata = {
+  title: "Pot"
+}
+
 const Page = ({ params }: { params: { pot_code: string } }) => {
   const { pot_code } = params;
 

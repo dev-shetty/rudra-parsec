@@ -18,6 +18,10 @@ type SearchParams = {
   };
 };
 
+export const metadata = {
+  title: "News"
+}
+
 export default async function TrendingNews({ searchParams }: SearchParams) {
   const { date, domain } = searchParams;
   const currentDate = `${new Date().getFullYear()}-${

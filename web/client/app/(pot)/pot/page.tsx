@@ -11,6 +11,11 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+
+export const metadata = {
+  title: "Pot"
+}
+
 const page = () => {
   const [potCode, setPotCode] = useState("");
   return (

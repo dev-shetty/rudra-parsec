@@ -1,11 +1,15 @@
-"use client";
-import { getUser } from "@/app/actions";
-import Navbar from "@/components/Navbar";
-import { Badge } from "@/components/ui/badge";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
+"use client"
+import { getUser } from "@/app/actions"
+import Navbar from "@/components/Navbar"
+import { Badge } from "@/components/ui/badge"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import Link from "next/link"
+import { redirect } from "next/navigation"
+import React, { useEffect, useState } from "react"
+
+export const metadata = {
+  title: "Pot Dashboard"
+}
 
 const page = () => {
   const [user, setUser] = useState<any>();
