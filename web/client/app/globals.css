@@ -28,8 +28,8 @@
 }
 
 .magicText {
-  --purple: #1374fc;
-  --violet: #1374fc;
+  --purple: #0390cf;
+  --violet: #df8175;
   --pink: #fbdbb8;
   animation: background-pan 3s linear infinite;
   background: linear-gradient(
