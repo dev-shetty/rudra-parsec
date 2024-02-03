@@ -1,5 +1,9 @@
 "use client";
 
+export const metadata = {
+  title: "Account"
+}
+
 import { getUser } from "@/app/actions";
 import Navbar from "@/components/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

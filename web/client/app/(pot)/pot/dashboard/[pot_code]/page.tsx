@@ -10,6 +10,10 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
+export const metadata = {
+  title: "Pot"
+}
+
 const Page = ({ params }: { params: { pot_code: string } }) => {
   const { pot_code } = params
 

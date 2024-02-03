@@ -7,6 +7,11 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
+export const metadata = {
+  title: "Pot Dashboard"
+}
+
+
 const page = () => {
   const [user, setUser] = useState<any>()
   const [pots, setPots] = useState<any[]>([])
