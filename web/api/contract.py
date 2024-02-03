@@ -1,4 +1,3 @@
-
 from solc import compile_source
 from web3 import Web3, HTTPProvider
 # from web3.contract import ConciseContract

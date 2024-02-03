@@ -1,42 +1,43 @@
-"use client";
-import { getUser } from "@/app/actions";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { motion, useInView } from "framer-motion";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+
+"use client"
+import { getUser } from "@/app/actions"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { motion, useInView } from "framer-motion"
+import { redirect, useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
 
 const page = () => {
-  const [loading, isLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const router = useRouter();
+  const [loading, isLoading] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const router = useRouter()
 
   function generateUniqueId() {
-    return `pot_${Math.random().toString(36).substr(2, 9)}`;
+    return `pot_${Math.random().toString(36).substr(2, 9)}`
   }
-  const [potCode, setPotCode] = useState(() => generateUniqueId());
-  const { toast } = useToast();
+  const [potCode, setPotCode] = useState(() => generateUniqueId())
+  const { toast } = useToast()
 
   const fetchUser = async () => {
-    const user = await getUser();
-    setUser(user);
-  };
+    const user = await getUser()
+    if (!user) redirect("/login")
+    setUser(user)
+  }
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchUser()
+  }, [])
 
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
       creator: user?.user_metadata.name,
-    }));
-  }, [user]);
+    }))
+  }, [user])
 
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient()
 
   const [formData, setFormData] = useState({
     purpose: "",
@@ -44,26 +45,26 @@ const page = () => {
     numberOfMembers: "",
     goalAmount: "",
     amountPerHead: "",
-  });
+  })
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    isLoading(true);
+    e.preventDefault()
+    isLoading(true)
 
     if (
       Number(formData.numberOfMembers) < 2 ||
       Number(formData.numberOfMembers) > 20
     ) {
-      isLoading(false);
-      return alert("Number of members should be between 2 and 20");
+      isLoading(false)
+      return alert("Number of members should be between 2 and 20")
     }
 
     const potData = {
@@ -74,38 +75,39 @@ const page = () => {
       amount_per_head:
         Number(formData.goalAmount) / Number(formData.numberOfMembers),
       pot_code: generateUniqueId(),
-      members: null,
-    };
+      amount_paid: 0,
+      members: [user.id],
+    }
 
-    console.log(potData);
+    console.log(potData)
     const { error, data } = await supabase
       .from("pot")
       .insert([potData])
-      .single();
+      .single()
     if (!error) {
       toast({
         title: "Pot created successfully",
         variant: "success",
-      });
-      isLoading(false);
-      router.push(`/create-pot/waiting?pot_code=${potCode}`);
+      })
+      router.push(`/create-pot/waiting?pot_code=${potCode}`)
     } else {
-      console.log(error);
+      console.log(error)
     }
-  };
+    isLoading(false)
+  }
 
-  const ref = React.useRef(null);
-  const isInView = useInView(ref) as boolean;
+  const ref = React.useRef(null)
+  const isInView = useInView(ref) as boolean
 
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
   const FADE_UP_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
   return (
     <motion.div
       className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
@@ -144,7 +146,6 @@ const page = () => {
             >
               <h1 className="font-semibold text-2xl">Create a Pot</h1>
               <div>
-                <Label>Purpose</Label>
                 <Input
                   name="purpose"
                   value={formData.purpose}
@@ -156,8 +157,6 @@ const page = () => {
                 ></Input>
               </div>
               <div>
-                <Label>Creator</Label>
-                <div>{formData.creator}</div>
                 <Input
                   name="creator"
                   value={formData.creator}
@@ -169,19 +168,17 @@ const page = () => {
                 ></Input>
               </div>
               <div>
-                <Label>Goal Amount</Label>
                 <Input
                   name="goalAmount"
                   value={formData.goalAmount}
                   onChange={handleInputChange}
                   disabled={loading}
-                  placeholder="Goal Amount"
+                  placeholder="Goal Ammount"
                   type="number"
                   className="w-full"
                 ></Input>
               </div>
               <div>
-                <Label>Number of members</Label>
                 <Input
                   name="numberOfMembers"
                   value={formData.numberOfMembers}
@@ -193,7 +190,6 @@ const page = () => {
                 ></Input>
               </div>
               <div>
-                <Label>Amount per head</Label>
                 <Input
                   name="amountPerHead"
                   value={(
@@ -201,7 +197,7 @@ const page = () => {
                     Number(formData.numberOfMembers)
                   ).toFixed(2)}
                   // onChange={handleInputChange}
-                  placeholder="Amount per head"
+                  placeholder="Ammount per head"
                   type="number"
                   className="readonly w-full"
                 ></Input>
@@ -266,7 +262,7 @@ const page = () => {
         </div>
       </motion.h1>
     </motion.div>
-  );
-};
+  )
+}
 
-export default page;
+export default page
