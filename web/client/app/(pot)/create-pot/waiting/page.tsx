@@ -1,56 +1,42 @@
-"use client";
+"use client"
 
-import AuthForm from "@/components/auth-form";
-import React, { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { motion, useInView } from "framer-motion";
-import { useToast } from "@/components/ui/use-toast";
-import { Copy } from "lucide-react";
-import Link from "next/link";
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import { motion, useInView } from "framer-motion"
+import { Copy } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import React, { useEffect, useRef, useState } from "react"
 const Page = () => {
-  const [loading, isLoading] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref) as boolean;
-  const { toast } = useToast();
+  const searchParams = useSearchParams()
+  const potCode = searchParams.get("pot_code")
+  const ref = useRef(null)
+  const isInView = useInView(ref) as boolean
+  const { toast } = useToast()
 
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
   const FADE_UP_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
-  // Function to generate a unique ID
-  const generateUniqueId = () => {
-    return `pot_${Math.random().toString(36).substr(2, 9)}`;
-  };
-
-  // State to store the generated ID
-  const [generatedId, setGeneratedId] = useState("");
-
-  // Function to handle ID generation and copying (executed once when component mounts)
-  useEffect(() => {
-    setGeneratedId(generateUniqueId());
-  }, []);
-
-  // Function to handle copying the generated ID
   const handleCopyId = () => {
-    // Copy the ID to the clipboard
-    const tempInput = document.createElement("input");
-    document.body.appendChild(tempInput);
-    tempInput.value = generatedId;
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
+    const tempInput = document.createElement("input")
+    document.body.appendChild(tempInput)
+    tempInput.value = potCode ?? ""
+    tempInput.select()
+    document.execCommand("copy")
+    document.body.removeChild(tempInput)
     toast({
       title: "ID Copied",
       variant: "success",
-    });
-  };
+    })
+  }
 
   return (
     <motion.div
@@ -77,7 +63,7 @@ const Page = () => {
 
               <div className="flex relative items-center">
                 <div className="py-2 px-3 w-full border border-input rounded-md">
-                  {generatedId}
+                  {potCode}
                 </div>
                 <Button
                   variant={"ghost"}
@@ -113,7 +99,7 @@ const Page = () => {
         </motion.h1>
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

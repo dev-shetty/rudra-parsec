@@ -2,22 +2,26 @@
 import { getUser } from "@/app/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { motion, useInView } from "framer-motion"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 const page = () => {
   const [loading, isLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
+  const router = useRouter()
+
+  function generateUniqueId() {
+    return `pot_${Math.random().toString(36).substr(2, 9)}`
+  }
+  const [potCode, setPotCode] = useState(() => generateUniqueId())
+  const { toast } = useToast()
 
   const fetchUser = async () => {
     const user = await getUser()
     setUser(user)
-  }
-
-  const generateUniqueId = () => {
-    return `pot_${Math.random().toString(36).substr(2, 9)}`
   }
 
   useEffect(() => {
@@ -73,9 +77,20 @@ const page = () => {
     }
 
     console.log(potData)
-    const pot = await supabase.from("pot").insert([potData]).single()
-    console.log(pot)
-    isLoading(false)
+    const { error, data } = await supabase
+      .from("pot")
+      .insert([potData])
+      .single()
+    if (!error) {
+      toast({
+        title: "Pot created successfully",
+        variant: "success",
+      })
+      isLoading(false)
+      router.push(`/create-pot/waiting?pot_code=${potCode}`)
+    } else {
+      console.log(error)
+    }
   }
 
   const ref = React.useRef(null)
