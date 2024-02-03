@@ -11,6 +11,11 @@ const Navbar = () => {
             POTs
           </Button>
         </Link>
+        <Link href="/login">
+          <Button variant={"link"} className="text-primary/50 hover:text-white">
+            Login
+          </Button>
+        </Link>
       </div>
     </div>
   );
