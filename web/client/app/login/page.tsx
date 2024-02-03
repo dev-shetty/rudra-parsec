@@ -1,7 +1,3 @@
-export const metadata = {
-  title: "Login"
-}
-
 import AuthForm from "@/components/auth-form";
 const page = () => {
   return (

@@ -1,74 +1,74 @@
-"use client"
+"use client";
 
-import { getUser } from "@/app/actions"
-import { Button } from "@/components/ui/button"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { redirect } from "next/navigation"
-import { useEffect, useState } from "react"
+import { getUser } from "@/app/actions";
+import { Button } from "@/components/ui/button";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function JoinPot({
   searchParams,
 }: {
-  searchParams: { pot_code: string }
+  searchParams: { pot_code: string };
 }) {
-  const [pot, setPot] = useState<any>(null)
-  const [user, setUser] = useState<any>(null)
-  const [potMembers, setPotMembers] = useState<any[]>([])
-  const { pot_code } = searchParams
+  const [pot, setPot] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
+  const [potMembers, setPotMembers] = useState<any[]>([]);
+  const { pot_code } = searchParams;
 
   const fetchUser = async () => {
-    const user = await getUser()
-    if (!user) redirect("/login")
-    setUser(user)
-  }
+    const user = await getUser();
+    if (!user) redirect("/login");
+    setUser(user);
+  };
 
   useEffect(() => {
-    fetchUser()
-    getPot()
-  }, [])
+    fetchUser();
+    getPot();
+  }, []);
 
   useEffect(() => {
-    getMembers()
-  }, [pot])
+    getMembers();
+  }, [pot]);
 
-  const supabase = createClientComponentClient()
+  const supabase = createClientComponentClient();
 
   async function getPot() {
     const { data, error } = await supabase
       .from("pot")
       .select("*")
       .eq("pot_code", pot_code)
-      .single()
-    setPot(data)
+      .single();
+    setPot(data);
 
     if (error) {
-      redirect("/pot")
+      redirect("/pot");
     }
   }
 
   async function getMembers() {
-    if (!pot) return
+    if (!pot) return;
     const { data, error } = await supabase
       .from("user")
       .select()
-      .in("auth_id", pot.members)
+      .in("auth_id", pot.members);
 
     setPotMembers(() => {
       return data?.map((user) => ({
         name: user.name,
         email: user.email,
         isCreator: pot.creator === user.auth_id,
-      }))!
-    })
+      }))!;
+    });
   }
 
   async function joinpot() {
     if (pot.members.includes(user.id)) {
-      alert("You are already a member of this pot")
-      return
+      alert("You are already a member of this pot");
+      return;
     }
-    await supabase.from("pot").update({ members: [...pot.members, user.id] })
-    redirect("/pot/dashboard")
+    await supabase.from("pot").update({ members: [...pot.members, user.id] });
+    redirect("/pot/dashboard");
   }
 
   return !pot ? (
@@ -91,5 +91,5 @@ export default function JoinPot({
       <p></p>
       <Button onClick={joinpot}>Join Pot</Button>
     </main>
-  )
+  );
 }

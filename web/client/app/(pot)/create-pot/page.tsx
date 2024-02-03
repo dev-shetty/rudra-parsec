@@ -10,10 +10,6 @@ import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Create Pot"
-}
-
 const page = () => {
   const [loading, isLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
