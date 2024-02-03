@@ -46,7 +46,7 @@ const CardData = [
 
   {
     id: 3,
-    link: "/education",
+    link: "/educate",
     title: "Education",
     icon: (
       <svg
@@ -108,6 +108,10 @@ const CardData = [
     content: "Transforming Text into Tailored Legal Agreements with Ease.",
   },
 ];
+
+export const metadata = {
+  title: "Service"
+}
 
 const Cards = () => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
