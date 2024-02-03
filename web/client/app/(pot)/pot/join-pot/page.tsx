@@ -27,6 +27,10 @@ export default function JoinPot({
     getPot()
   }, [])
 
+  useEffect(() => {
+    getMembers()
+  }, [pot])
+
   const supabase = createClientComponentClient()
 
   async function getPot() {
@@ -37,13 +41,25 @@ export default function JoinPot({
       .single()
     setPot(data)
 
-    // const creatorInfo = await supabase.auth.
-
-    // console.log(creatorInfo)
-
     if (error) {
       redirect("/pot")
     }
+  }
+
+  async function getMembers() {
+    if (!pot) return
+    const { data, error } = await supabase
+      .from("user")
+      .select()
+      .in("auth_id", pot.members)
+
+    setPotMembers(() => {
+      return data?.map((user) => ({
+        name: user.name,
+        email: user.email,
+        isCreator: pot.creator === user.auth_id,
+      }))!
+    })
   }
 
   async function joinpot() {
@@ -55,8 +71,6 @@ export default function JoinPot({
     redirect("/pot/dashboard")
   }
 
-  console.log({ pot })
-
   return !pot ? (
     <div>Loading...</div>
   ) : (
@@ -67,6 +81,13 @@ export default function JoinPot({
       <p>Goal Amount: {pot.goal_amount}</p>
       <p>Purpose: {pot.purpose}</p>
       <p>Total months: {pot.total_members}</p>
+      {potMembers.map((member, i) => (
+        <div key={i} className="flex gap-2">
+          {member.isCreator && <p>Creator: </p>}
+          <p>{member.name}</p>
+          <p>{member.email}</p>
+        </div>
+      ))}
       <p></p>
       <Button onClick={joinpot}>Join Pot</Button>
     </main>
