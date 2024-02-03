@@ -1,8 +1,8 @@
-"use client"
-import Navbar from "@/components/Pots/Navbar"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
-import React from "react"
+"use client";
+import Navbar from "@/components/Navbar";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import React from "react";
 
 const CardData = [
   {
@@ -34,20 +34,20 @@ const CardData = [
     members: ["Name 1", "Name 2", "Name 3", "Name 1"],
     month: "9 / 11",
   },
-]
+];
 
 const page = () => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`
-  }
+    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`;
+  };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.background = "#d1f2f900"
-  }
+    e.currentTarget.style.background = "#d1f2f900";
+  };
 
   return (
     <div className="py-36 min-h-screen">
@@ -65,8 +65,8 @@ const page = () => {
               height: `calc(${card.members.length * 30}px)`, // Adjust the factor (40px) as needed
             }}
           >
-            <div className="absolute h-full inset-0 bg-gradient-to-br from-blue-500 via-[#f6cbc5] to-[#df8175] rounded-3xl p-1 z-5">
-              <div className="bg-black w-full rounded-[1.25rem] h-full">
+            <div className="absolute h-full inset-0 bg-input hover:bg-gradient-to-br from-blue-500 via-[#f6cbc5] to-[#df8175] rounded-3xl p-0.5 z-5">
+              <div className="bg-black w-full rounded-3xl h-full">
                 <div
                   className="rounded-2xl flex flex-col justify-center items-center p-5 h-full"
                   onMouseMove={handleMouseMove}
@@ -102,7 +102,7 @@ const page = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

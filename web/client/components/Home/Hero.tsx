@@ -14,7 +14,7 @@ const Hero = () => {
   };
 
   return (
-    <main className="hero flex px-8 justify-center items-center md:mt-40 md:mb-24 mt-24">
+    <main className="hero flex px-8 justify-center items-center mt-40 mb-10">
       <div className="absolute top-0 left-0 right-0">
         <div className="absolute left-50 top-50 -z-10 overflow-visible opacity-20">
           <div className="-z-10 h-[600px] md:w-[500px] rounded-full bg-white/20 mix-blend-multiply blur-[128px]" />
@@ -47,6 +47,11 @@ const Hero = () => {
                 Emerge Financially<span className="magicText"> Fulfilled</span>.
               </motion.h1>
             </div>
+            <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
+              <Link href="/login">
+                <Button className="mt-10">Get Started</Button>
+              </Link>{" "}
+            </motion.h1>
           </motion.div>
         </div>
       </div>

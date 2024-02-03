@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Select,
@@ -7,48 +7,48 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { NewsDomains } from "@/lib/types"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+} from "@/components/ui/select";
+import { NewsDomains } from "@/lib/types";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn, getHumanFriendlyDate } from "@/lib/utils"
+} from "@/components/ui/popover";
+import { cn, getHumanFriendlyDate } from "@/lib/utils";
 
 export default function NewsQuery({ domain }: { domain?: NewsDomains }) {
-  const [date, setDate] = useState<Date>()
-  const router = useRouter()
-  const DAY_TO_MILLI = 86400000
+  const [date, setDate] = useState<Date>();
+  const router = useRouter();
+  const DAY_TO_MILLI = 86400000;
 
   function updateDate(date: any) {
-    let _date
+    let _date;
 
     if (date.getTime() > new Date().getTime() - DAY_TO_MILLI) {
-      const dateObj = new Date()
+      const dateObj = new Date();
       _date = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${
         dateObj.getDate() - 1
-      }`
+      }`;
     } else {
-      _date = getHumanFriendlyDate(date)
-      setDate(date)
+      _date = getHumanFriendlyDate(date);
+      setDate(date);
     }
 
-    router.refresh()
-    router.push(`/news?date=${_date}`)
+    router.refresh();
+    router.push(`/news?date=${_date}`);
   }
 
   return (
-    <div className="flex gap-4 my-4">
+    <div className="flex w-full gap-4 my-4 md:flex-row flex-col">
       <Select onValueChange={(e: string) => router.push(`/news?domain=${e}`)}>
-        <SelectTrigger className="w-[300px]">
+        <SelectTrigger className="">
           <SelectValue placeholder={domain ?? "Indian Finance"} />
         </SelectTrigger>
         <SelectContent>
@@ -63,7 +63,7 @@ export default function NewsQuery({ domain }: { domain?: NewsDomains }) {
           <Button
             variant={"outline"}
             className={cn(
-              "w-[280px] justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
@@ -81,5 +81,5 @@ export default function NewsQuery({ domain }: { domain?: NewsDomains }) {
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

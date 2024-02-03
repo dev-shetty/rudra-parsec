@@ -1,20 +1,25 @@
-"use client"
+"use client";
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
-import React, { useState } from "react"
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
 const page = () => {
-  const [potCode, setPotCode] = useState("")
+  const [potCode, setPotCode] = useState("");
   return (
     <div className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="fixed top-0 left-0 m-5 z-50">
+        <Link href="/service">
+          <Button variant={"secondary"}>Back</Button>
+        </Link>
+      </div>
       <div className="relative hidden h-full flex-col bg-muted text-white lg:flex">
         <img
           // quality={100}
@@ -69,7 +74,7 @@ const page = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
