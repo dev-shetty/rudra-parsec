@@ -1,43 +1,11 @@
 "use client"
 import { getUser } from "@/app/actions"
-import Navbar from "@/components/Pots/Navbar"
+import Navbar from "@/components/Navbar"
 import { Badge } from "@/components/ui/badge"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import React, { useEffect, useState } from "react"
-
-const CardData = [
-  {
-    id: 1,
-    amount: "1000",
-    pot_id: "pot_brlozecf4",
-    members: [
-      "Name 1",
-      "Name 2",
-      "Name 3",
-      "Name 1",
-      "Name 2",
-      "Name 3",
-      "Name 1",
-    ],
-    month: "9 / 11",
-  },
-  {
-    id: 1,
-    amount: "1000",
-    pot_id: "pot_brlozecf4",
-    members: ["Name 1", "Name 2", "Name 3", "Name 1"],
-    month: "9 / 11",
-  },
-  {
-    id: 1,
-    amount: "1000",
-    pot_id: "pot_brlozecf4",
-    members: ["Name 1", "Name 2", "Name 3", "Name 1"],
-    month: "9 / 11",
-  },
-]
 
 const page = () => {
   const [user, setUser] = useState<any>()
