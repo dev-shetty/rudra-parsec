@@ -16,7 +16,9 @@ const page = () => {
     setUser(user)
   }
 
-  console.log(user?.user_metadata.name)
+  const generateUniqueId = () => {
+    return `pot_${Math.random().toString(36).substr(2, 9)}`
+  }
 
   useEffect(() => {
     fetchUser()
@@ -51,19 +53,28 @@ const page = () => {
     e.preventDefault()
     isLoading(true)
 
+    if (
+      Number(formData.numberOfMembers) < 2 ||
+      Number(formData.numberOfMembers) > 20
+    ) {
+      isLoading(false)
+      return alert("Number of members should be between 2 and 20")
+    }
+
     const potData = {
       purpose: formData.purpose,
-      creator: user?.id,
-      goal_amount: formData.goalAmount,
-      amount_per_head: formData.amountPerHead,
-      members: [],
+      creator: user.id,
+      goal_amount: Number(formData.goalAmount),
+      total_members: Number(formData.numberOfMembers),
+      amount_per_head:
+        Number(formData.goalAmount) / Number(formData.numberOfMembers),
+      pot_code: generateUniqueId(),
+      members: null,
     }
 
     console.log(potData)
-
-    // You can perform <for></for>m submission logic here
-
-    console.log("Form submitted:", formData)
+    const pot = await supabase.from("pot").insert([potData]).single()
+    console.log(pot)
     isLoading(false)
   }
 
@@ -140,17 +151,6 @@ const page = () => {
               </div>
               <div>
                 <Input
-                  name="numberOfMembers"
-                  value={formData.numberOfMembers}
-                  onChange={handleInputChange}
-                  disabled={loading}
-                  placeholder="Number of members"
-                  type="number"
-                  className="w-full"
-                ></Input>
-              </div>
-              <div>
-                <Input
                   name="goalAmount"
                   value={formData.goalAmount}
                   onChange={handleInputChange}
@@ -162,13 +162,26 @@ const page = () => {
               </div>
               <div>
                 <Input
-                  name="amountPerHead"
-                  value={formData.amountPerHead}
+                  name="numberOfMembers"
+                  value={formData.numberOfMembers}
                   onChange={handleInputChange}
                   disabled={loading}
-                  placeholder="Ammount per head"
+                  placeholder="Number of members"
                   type="number"
                   className="w-full"
+                ></Input>
+              </div>
+              <div>
+                <Input
+                  name="amountPerHead"
+                  value={(
+                    Number(formData.goalAmount) /
+                    Number(formData.numberOfMembers)
+                  ).toFixed(2)}
+                  // onChange={handleInputChange}
+                  placeholder="Ammount per head"
+                  type="number"
+                  className="readonly w-full"
                 ></Input>
               </div>
               <Button type="submit" disabled={loading} className="w-full">
