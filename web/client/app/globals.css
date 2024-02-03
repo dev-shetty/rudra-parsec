@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
+    --background: 240 0% 0%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -54,4 +54,24 @@
   to {
     background-position: -200% center;
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #4b515b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5c636e;
 }

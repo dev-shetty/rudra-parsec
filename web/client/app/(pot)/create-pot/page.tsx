@@ -1,5 +1,65 @@
-"use client";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import React from "react";
+// import Background from "./background";
+// const page = () => {
+//   return (
+//     <div className="flex justify-center items-center min-h-screen">
+//       <Background />
+//   <form className="max-w-7xl flex flex-col gap-5">
+//     <div>
+//       <Input placeholder="Purpose" type="text" className="w-96"></Input>
+//     </div>
+//     <div>
+//       <Input placeholder="Creator" type="text" className="w-96"></Input>
+//     </div>
+//     <div>
+//       <Input
+//         placeholder="Number of members"
+//         type="number"
+//         className="w-96"
+//       ></Input>
+//     </div>
+//     <div>
+//       <Input
+//         placeholder="Goal Ammount"
+//         type="number"
+//         className="w-96"
+//       ></Input>
+//     </div>
+//     <div>
+//       <Input
+//         placeholder="Ammount per head"
+//         type="number"
+//         className="w-96"
+//       ></Input>
+//     </div>
+//     <Button className="w-full">Create POT</Button>
+//   </form>
+//     </div>
+//   );
+// };
 
+// export default page;
+
+// import AuthForm from "@/components/auth-form";
+
+// export default function Login({
+//   searchParams,
+// }: {
+//   searchParams: { message: string };
+// }) {
+//   return (
+//     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+//       <AuthForm />
+//     </div>
+//   );
+// }
+
+"use client";
+import { motion, useInView } from "framer-motion";
+import AuthForm from "@/components/auth-form";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,55 +75,93 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 const page = () => {
   const [loading, isLoading] = useState(false);
-  return (
-    <div className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-muted text-white lg:flex">
-        <img
-          // quality={100}
-          // priority
-          src="/grad.jpg"
-          className="relative bg-black object-cover w-full h-full z-20"
-          width={500}
-          height={500}
-          alt="login-image"
-        ></img>
-      </div>
-      <div className="lg:p-8">
-        <div className="mx-auto flex flex-col justify-center space-y-6 w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">POTs</h1>
-          </div>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Join an existing POT</AccordionTrigger>
-              <AccordionContent>
-                <div className="flex gap-3">
-                  <Input
-                    placeholder="Enter the code"
-                    className="w-full focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-white"
-                  />
-                  <Button>
-                    <ArrowRight className="w-5 h-5" />
-                  </Button>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+  const ref = React.useRef(null);
+  const isInView = useInView(ref) as boolean;
 
-          <Button>Create a new POT</Button>
-          {/* <UserAuthForm /> */}
-          {/* <p className="px-8 text-center text-sm text-muted-foreground">
-            Do not have an account?{" "}
-            <Link
-              href="/register"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Register
-            </Link>
-          </p> */}
+  const FADE_DOWN_ANIMATION_VARIANTS = {
+    hidden: { opacity: 0, y: -20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
+  };
+
+  const FADE_UP_ANIMATION_VARIANTS = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
+  };
+  return (
+    <motion.div
+      className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
+      initial="hidden"
+      ref={ref}
+      animate={isInView ? "show" : "hidden"}
+      viewport={{ once: true }}
+      variants={{
+        hidden: {},
+        show: {
+          transition: {
+            staggerChildren: 0.15,
+          },
+        },
+      }}
+    >
+      <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
+        <div className="relative hidden h-full flex-col bg-muted text-white lg:flex">
+          <img
+            // quality={100}
+            // priority
+            src="/pot.png"
+            className="relative bg-black object-cover w-full h-full z-20"
+            width={500}
+            height={500}
+            alt="login-image"
+          ></img>
         </div>
-      </div>
-    </div>
+      </motion.h1>
+      <motion.h1 variants={FADE_UP_ANIMATION_VARIANTS}>
+        <div className="lg:p-8">
+          <div className="mx-auto flex flex-col justify-center space-y-6 w-[350px]">
+            <form className="max-w-7xl flex flex-col gap-5">
+              <h1 className="font-semibold text-2xl">Create Pot</h1>
+              <div>
+                <Input
+                  placeholder="Purpose"
+                  type="text"
+                  className="w-full"
+                ></Input>
+              </div>
+              <div>
+                <Input
+                  placeholder="Creator"
+                  type="text"
+                  className="w-full"
+                ></Input>
+              </div>
+              <div>
+                <Input
+                  placeholder="Number of members"
+                  type="number"
+                  className="w-full"
+                ></Input>
+              </div>
+              <div>
+                <Input
+                  placeholder="Goal Ammount"
+                  type="number"
+                  className="w-full"
+                ></Input>
+              </div>
+              <div>
+                <Input
+                  placeholder="Ammount per head"
+                  type="number"
+                  className="w-full"
+                ></Input>
+              </div>
+              <Button className="w-full">Create POT</Button>
+            </form>
+          </div>
+        </div>
+      </motion.h1>
+    </motion.div>
   );
 };
 
