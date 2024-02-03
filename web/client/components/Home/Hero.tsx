@@ -14,7 +14,7 @@ const Hero = () => {
   };
 
   return (
-    <main className="hero flex px-8 justify-center items-center min-h-screen">
+    <main className="hero flex px-8 justify-center items-center md:mt-40 md:mb-24 mt-24">
       <div className="absolute top-0 left-0 right-0">
         <div className="absolute left-50 top-50 -z-10 overflow-visible opacity-20">
           <div className="-z-10 h-[600px] md:w-[500px] rounded-full bg-white/20 mix-blend-multiply blur-[128px]" />
@@ -37,24 +37,16 @@ const Hero = () => {
               },
             }}
           >
-            <div className="text-6xl sm:text-8xl font-semibold">
+            <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
+              <div className="md:text-7xl text-5xl font-semibold">
+                Finvest<span className="magicText">.</span>
+              </div>
+            </motion.h1>
+            <div className="md:text-5xl text-3xl mt-5 font-semibold">
               <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
-                Emerge <span className="magicText">Financially</span> Fulfilled.
+                Emerge Financially<span className="magicText"> Fulfilled</span>.
               </motion.h1>
             </div>
-            {/* <div className="mt-3 md:text-lg md:leading-8 leading-6 text-primary/50">
-              <motion.p variants={FADE_DOWN_ANIMATION_VARIANTS}>
-                Helping you make informed decisions for a brighter financial
-                future.
-              </motion.p>
-            </div> */}
-            {/* <div className="mt-5 flex items-center justify-center gap-x-6">
-              <motion.div variants={FADE_DOWN_ANIMATION_VARIANTS}>
-                <Link href="/login">
-                  <Button>{"Get Started -> "}</Button>
-                </Link>
-              </motion.div>
-            </div> */}
           </motion.div>
         </div>
       </div>

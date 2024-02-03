@@ -22,29 +22,23 @@ const CardData = [
       "Collaborative Money Pots for Seamless and Shared Financial Goals.",
   },
   {
-    id: 1,
+    id: 2,
+    title: "Newsletter",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="60"
+        height="60"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill="currentColor"
+          d="M3.5 5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5zM4 9V8h1v1zm3.5-2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM1 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2a2 2 0 0 1 2 2v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 10.5zm11.5 6.5a.5.5 0 0 1-.5-.5V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6.5A1.5 1.5 0 0 0 3.5 12h9a1.5 1.5 0 0 0 1.5-1.5V6a1 1 0 0 0-1-1v5a.5.5 0 0 1-.5.5"
+        />
+      </svg>
+    ),
     content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, eius velit. Sint dolorem, at facere vero tempora similique porro quisquam cum ex corrupti debitis possimus doloribus est, alias quos iusto!",
-  },
-  {
-    id: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, eius velit. Sint dolorem, at facere vero tempora similique porro quisquam cum ex corrupti debitis possimus doloribus est, alias quos iusto!",
-  },
-  {
-    id: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, eius velit. Sint dolorem, at facere vero tempora similique porro quisquam cum ex corrupti debitis possimus doloribus est, alias quos iusto!",
-  },
-  {
-    id: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, eius velit. Sint dolorem, at facere vero tempora similique porro quisquam cum ex corrupti debitis possimus doloribus est, alias quos iusto!",
-  },
-  {
-    id: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, eius velit. Sint dolorem, at facere vero tempora similique porro quisquam cum ex corrupti debitis possimus doloribus est, alias quos iusto!",
+      "Stay informed on finance with our newsletter. Make smart decisions.",
   },
 ];
 
@@ -62,7 +56,7 @@ const Cards = () => {
   };
 
   return (
-    <div className="my-20">
+    <div className="my-10">
       <div className="font-semibold text-5xl text-center mb-10">
         Our Services
       </div>

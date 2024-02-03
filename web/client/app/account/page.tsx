@@ -1,3 +1,4 @@
+
 import { getUser } from "@/app/actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -98,5 +99,6 @@ export default async function AccountPage() {
         </Card>
       </section>
     </main>
-  )
+  )
 }
+
