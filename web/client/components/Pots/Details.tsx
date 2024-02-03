@@ -1,8 +1,8 @@
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import CalendarDateRangePicker from "../ui/date-range-picker";
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import React from "react"
+import CalendarDateRangePicker from "../ui/date-range-picker"
 
 const Details = () => {
   return (
@@ -24,7 +24,7 @@ const Details = () => {
         <Textarea placeholder="Your Address." />
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default Details;
+export default Details
