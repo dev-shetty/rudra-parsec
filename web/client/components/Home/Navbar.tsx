@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed select-none z-50 mt-3 top-0 left-0 hidden md:flex justify-center w-full items-center py-4 md:px-10 transition-opacity duration-300 ${
+      className={`fixed select-none z-50 mt-3 top-0 left-0 flex justify-center w-full items-center py-4 md:px-5 transition-opacity duration-300 ${
         isNavVisible ? "opacity-100" : "opacity-0 hidden"
       }`}
     >
@@ -49,35 +49,8 @@ const Navbar: React.FC = () => {
           </p>
         </Linkk>
         <ul className="flex tracking-wider justify-end">
-          <li className="mr-6 cursor-pointer hover:font-bold transition">
-            <Link to="about" smooth={true} duration={500} offset={-130}>
-              About
-            </Link>
-          </li>
-          <li className="mr-6 cursor-pointer hover:font-bold transition">
-            <Link to="flow" smooth={true} duration={500}>
-              Flow
-            </Link>
-          </li>
-          <li className="mr-6 cursor-pointer hover:font-bold transition">
-            <Link to="themes" smooth={true} duration={500} offset={-50}>
-              Themes
-            </Link>
-          </li>
-          {/* <li className="mr-6 cursor-pointer hover:font-bold transition">
-            <Link to="process" smooth={true} duration={500} offset={-50}>
-              Registration
-            </Link>
-          </li> */}
-          <li className="mr-6 cursor-pointer hover:font-bold transition">
-            <Link to="faq" smooth={true} duration={500} offset={-70}>
-              FAQ&apos;s
-            </Link>
-          </li>
-          <li className="mr-6 cursor-pointer hover:font-bold transition">
-            <Link to="contact" smooth={true} duration={500} offset={-135}>
-              Contact
-            </Link>
+          <li className="mr-6 cursor-pointer hover:underline underline-offset-4">
+            <Linkk href="/login">Login</Linkk>
           </li>
         </ul>
       </div>

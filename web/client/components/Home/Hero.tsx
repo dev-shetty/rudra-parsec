@@ -17,7 +17,7 @@ const Hero = () => {
     <main className="hero flex px-8 justify-center items-center min-h-screen">
       <div className="absolute top-0 left-0 right-0">
         <div className="absolute left-50 top-50 -z-10 overflow-visible opacity-20">
-          <div className="-z-10 h-[600px] w-[500px] rounded-full bg-white/20 mix-blend-multiply blur-[128px]" />
+          <div className="-z-10 h-[600px] md:w-[500px] rounded-full bg-white/20 mix-blend-multiply blur-[128px]" />
         </div>
       </div>
 
