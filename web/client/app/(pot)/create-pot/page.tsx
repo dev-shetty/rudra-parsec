@@ -1,80 +1,36 @@
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import React from "react";
-// import Background from "./background";
-// const page = () => {
-//   return (
-//     <div className="flex justify-center items-center min-h-screen">
-//       <Background />
-//   <form className="max-w-7xl flex flex-col gap-5">
-//     <div>
-//       <Input placeholder="Purpose" type="text" className="w-96"></Input>
-//     </div>
-//     <div>
-//       <Input placeholder="Creator" type="text" className="w-96"></Input>
-//     </div>
-//     <div>
-//       <Input
-//         placeholder="Number of members"
-//         type="number"
-//         className="w-96"
-//       ></Input>
-//     </div>
-//     <div>
-//       <Input
-//         placeholder="Goal Ammount"
-//         type="number"
-//         className="w-96"
-//       ></Input>
-//     </div>
-//     <div>
-//       <Input
-//         placeholder="Ammount per head"
-//         type="number"
-//         className="w-96"
-//       ></Input>
-//     </div>
-//     <Button className="w-full">Create POT</Button>
-//   </form>
-//     </div>
-//   );
-// };
-
-// export default page;
-
-// import AuthForm from "@/components/auth-form";
-
-// export default function Login({
-//   searchParams,
-// }: {
-//   searchParams: { message: string };
-// }) {
-//   return (
-//     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-//       <AuthForm />
-//     </div>
-//   );
-// }
-
 "use client";
 import { motion, useInView } from "framer-motion";
-import AuthForm from "@/components/auth-form";
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import React, { useState } from "react";
+
 const page = () => {
   const [loading, isLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    purpose: "",
+    creator: "",
+    numberOfMembers: "",
+    goalAmount: "",
+    amountPerHead: "",
+  });
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    isLoading(true);
+    // You can perform form submission logic here
+    console.log("Form submitted:", formData);
+    isLoading(false);
+  };
+
   const ref = React.useRef(null);
   const isInView = useInView(ref) as boolean;
 
@@ -119,10 +75,17 @@ const page = () => {
       <motion.h1 variants={FADE_UP_ANIMATION_VARIANTS}>
         <div className="lg:p-8 flex min-h-screen justify-center items-center">
           <div className="mx-auto flex flex-col justify-center space-y-6 w-[350px]">
-            <form className="max-w-7xl flex flex-col gap-5">
-              <h1 className="font-semibold text-2xl">Create Pot</h1>
+            <form
+              className="max-w-7xl flex flex-col gap-5"
+              onSubmit={handleSubmit}
+            >
+              <h1 className="font-semibold text-2xl">Create a Pot</h1>
               <div>
                 <Input
+                  name="purpose"
+                  value={formData.purpose}
+                  onChange={handleInputChange}
+                  disabled={loading}
                   placeholder="Purpose"
                   type="text"
                   className="w-full"
@@ -130,6 +93,10 @@ const page = () => {
               </div>
               <div>
                 <Input
+                  name="creator"
+                  value={formData.creator}
+                  onChange={handleInputChange}
+                  disabled={loading}
                   placeholder="Creator"
                   type="text"
                   className="w-full"
@@ -137,6 +104,10 @@ const page = () => {
               </div>
               <div>
                 <Input
+                  name="numberOfMembers"
+                  value={formData.numberOfMembers}
+                  onChange={handleInputChange}
+                  disabled={loading}
                   placeholder="Number of members"
                   type="number"
                   className="w-full"
@@ -144,6 +115,10 @@ const page = () => {
               </div>
               <div>
                 <Input
+                  name="goalAmount"
+                  value={formData.goalAmount}
+                  onChange={handleInputChange}
+                  disabled={loading}
                   placeholder="Goal Ammount"
                   type="number"
                   className="w-full"
@@ -151,12 +126,70 @@ const page = () => {
               </div>
               <div>
                 <Input
+                  name="amountPerHead"
+                  value={formData.amountPerHead}
+                  onChange={handleInputChange}
+                  disabled={loading}
                   placeholder="Ammount per head"
                   type="number"
                   className="w-full"
                 ></Input>
               </div>
-              <Button className="w-full">Create POT</Button>
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    Create
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <g
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-dasharray="60"
+                          stroke-dashoffset="60"
+                          stroke-opacity=".3"
+                          d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"
+                        >
+                          <animate
+                            fill="freeze"
+                            attributeName="stroke-dashoffset"
+                            dur="1.3s"
+                            values="60;0"
+                          />
+                        </path>
+                        <path
+                          stroke-dasharray="15"
+                          stroke-dashoffset="15"
+                          d="M12 3C16.9706 3 21 7.02944 21 12"
+                        >
+                          <animate
+                            fill="freeze"
+                            attributeName="stroke-dashoffset"
+                            dur="0.3s"
+                            values="15;0"
+                          />
+                          <animateTransform
+                            attributeName="transform"
+                            dur="1.5s"
+                            repeatCount="indefinite"
+                            type="rotate"
+                            values="0 12 12;360 12 12"
+                          />
+                        </path>
+                      </g>
+                    </svg>
+                  </div>
+                ) : (
+                  <div>Create</div>
+                )}
+              </Button>
             </form>
           </div>
         </div>
