@@ -99,7 +99,7 @@ const Page = () => {
           </div>
         </div>
       </motion.h1>
-      <div className="relative hidden h-full bg-black flex-col bg-muted text-white lg:flex">
+      <div className="relative hidden h-full bg-black flex-col text-white lg:flex">
         <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
           <Image
             quality={100}
