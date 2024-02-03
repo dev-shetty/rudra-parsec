@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Accordion,
   AccordionContent,
@@ -8,9 +10,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import React from "react"
+import React, { useState } from "react"
 const page = () => {
-  
+  const [potCode, setPotCode] = useState("")
   return (
     <div className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted text-white lg:flex">
@@ -36,10 +38,14 @@ const page = () => {
                 <div className="flex gap-3">
                   <Input
                     placeholder="Enter the code"
+                    value={potCode}
+                    onChange={(e) => setPotCode(e.target.value)}
                     className="w-full focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-white"
                   />
-                  <Button>
-                    <ArrowRight className="w-5 h-5" />
+                  <Button asChild>
+                    <Link href={`/pot/join-pot?pot_code=${potCode}`}>
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
                   </Button>
                 </div>
               </AccordionContent>

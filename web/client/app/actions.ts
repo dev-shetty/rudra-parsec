@@ -10,6 +10,11 @@ export async function getUser() {
   return user.data.user
 }
 
+export async function getUserById(id: string) {
+  const user = await supabase.from("user").select().eq("id", id)
+  return user.data
+}
+
 export async function createPot(formData: any) {
   const { data, error } = await supabase
     .from("pots")

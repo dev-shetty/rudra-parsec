@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { motion, useInView } from "framer-motion"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 const page = () => {
@@ -21,6 +21,7 @@ const page = () => {
 
   const fetchUser = async () => {
     const user = await getUser()
+    if (!user) redirect("/login")
     setUser(user)
   }
 
@@ -73,7 +74,8 @@ const page = () => {
       amount_per_head:
         Number(formData.goalAmount) / Number(formData.numberOfMembers),
       pot_code: generateUniqueId(),
-      members: null,
+      amount_paid: 0,
+      members: [user.id],
     }
 
     console.log(potData)
@@ -86,11 +88,11 @@ const page = () => {
         title: "Pot created successfully",
         variant: "success",
       })
-      isLoading(false)
       router.push(`/create-pot/waiting?pot_code=${potCode}`)
     } else {
       console.log(error)
     }
+    isLoading(false)
   }
 
   const ref = React.useRef(null)
