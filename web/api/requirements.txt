@@ -56,3 +56,5 @@ fastapi[all]
 uvicorn==0.15.0
 opencv-python
 deepface==0.0.68
+python-multipart==0.0.5
+SpeechRecognition==3.8.1
