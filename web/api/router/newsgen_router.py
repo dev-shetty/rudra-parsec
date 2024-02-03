@@ -47,12 +47,12 @@ def genResp(text):
 
 def chatWithAI(language):
     today_date = datetime.datetime.now().strftime('%Y-%m-%d')
-    question = f"What is the Latest news on {language} in {today_date}: "
+    question = f"Tell me everything about {language}: "
     tokens = nltk.word_tokenize(question)
     for word in tokens:
         if word in finance_keywords:
             language = word
-            question = f"What is the Latest news on {language} in {today_date}:"
+            question = f"Tell me everything about {language}:"
             break
     if language in finance_keywords:
         res = re.sub(r"\n", "<br>", genResp(question))
@@ -70,10 +70,13 @@ def text_to_speech(text):
     for icon in icons:
         text = text.replace(icon, '')
     tts = gTTS(text=text, lang='en', slow=False)
-    filename = "assets/speech.mp3"
+    filename = "./assets/speech.mp3"
     tts.save(filename)
-    response = requests.post("https://picdb.izaries.workers.dev/upload", files={'file': ('speech.mp3', open('speech.mp3', 'rb'))})
-    if response.status_code == 200 and response.json()['success']:
-        return { 'success': True, 'audio': response.json()["download"], 'text': text }
-    else:
-        return { 'success': False, 'message': response.json()["message"] }
+    with open(filename, "rb") as file:
+        file_data = file.read()
+        response = requests.post("https://picdb.izaries.workers.dev/upload", files={ "file": file_data }, headers={ 'X-File-Type': "mp3", })
+        if response.status_code == 200 and response.json()['success']:
+            return { 'success': True, 'audio': response.json()["download"], 'text': response.json()["text"] }
+        else:
+            return { 'success': False, 'message': "Internal Issue" }
+    return { 'success': False, 'message': "Internal Issue" }
