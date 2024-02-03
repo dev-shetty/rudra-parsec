@@ -1,8 +1,8 @@
-"use client"
-import { Database } from "@/utils/supabase/database.types"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { Auth } from "@supabase/auth-ui-react"
-import { ThemeMinimal } from "@supabase/auth-ui-shared"
+"use client";
+import { Database } from "@/utils/supabase/database.types";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeMinimal } from "@supabase/auth-ui-shared";
 
 export default function AuthForm({ mode }: { mode: "signin" | "signup" }) {
   const supabase = createClientComponentClient<Database>()
@@ -19,5 +19,5 @@ export default function AuthForm({ mode }: { mode: "signin" | "signup" }) {
       providers={["google"]}
       redirectTo="http://localhost:3000/auth/callback"
     />
-  )
+  );
 }
