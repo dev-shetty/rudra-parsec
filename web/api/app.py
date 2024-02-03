@@ -14,6 +14,7 @@ import router.app_router as app_router
 import router.gmail_router as gmail_router
 import router.newsgen_router as newsgen_router
 import router.s2t_router as s2t_router
+import router.notify_router as notify_router
 
 app = FastAPI(
     title="Finvest API",
@@ -39,6 +40,7 @@ app.include_router(app_router.router, prefix="/api/v1")
 app.include_router(gmail_router.router, prefix="/api/v1/gmail")
 app.include_router(newsgen_router.router, prefix="/api/v1/newsgen")
 app.include_router(s2t_router.router, prefix="/api/v1/t2s")
+app.include_router(notify_router.router, prefix="/api/v1/notify")
 
 # Home
 @app.get("/")

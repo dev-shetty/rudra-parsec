@@ -7,3 +7,8 @@ class Email(BaseModel):
 class NewsGen(BaseModel):
     input: str
 
+class SendMessage(BaseModel):
+    due: str
+    pot: str
+    date: str
+    phone: str
