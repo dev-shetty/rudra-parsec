@@ -72,24 +72,59 @@ export default function JoinPot({
   }
 
   return !pot ? (
-    <div>Loading...</div>
+    <div className="my-16">Loading...</div>
   ) : (
-    <main>
-      <h1>Join Pot</h1>
-      <p>Joining pot {pot_code}</p>
-      <p>Amount per head: {pot.amount_per_head}</p>
-      <p>Goal Amount: {pot.goal_amount}</p>
-      <p>Purpose: {pot.purpose}</p>
-      <p>Total months: {pot.total_members}</p>
-      {potMembers.map((member, i) => (
-        <div key={i} className="flex gap-2">
-          {member.isCreator && <p>Creator: </p>}
-          <p>{member.name}</p>
-          <p>{member.email}</p>
+    <div className="my-16 flex border rounded-lg p-4 gap-4 items-center justify-center">
+      <div className="space-y-4 pr-4">
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold text-center">
+            Join pot - {pot_code}
+          </h2>
         </div>
-      ))}
-      <p></p>
-      <Button onClick={joinpot}>Join Pot</Button>
-    </main>
+        <div className="space-y-2 pl-4">
+          <div className="flex justify-between items-center">
+            <span className="font-semibold">Pot amount:</span>
+            <span>₹{pot.goal_amount}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold">Pot amount per head:</span>
+            <span>₹{pot.amount_per_head}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold">Pot description:</span>
+            <span>{pot.purpose}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold">Total Members:</span>
+            <span>{pot.total_members}</span>
+          </div>
+        </div>
+        {potMembers.map((member, i) => (
+          <div key={i} className="flex gap-2">
+            {member.isCreator && <p>Creator: </p>}
+            <p>{member.name}</p>
+            <p>{member.email}</p>
+          </div>
+        ))}
+        <div className="mt-4 w-full">
+          <Button className="w-full" onClick={joinpot}>
+            Join the pot
+          </Button>
+        </div>
+      </div>
+      <div className="w-1/2">
+        <img
+          alt="Pot Image"
+          className="w-full h-full object-cover rounded-lg"
+          height="500"
+          src="/cash.jpg"
+          style={{
+            aspectRatio: "500/500",
+            objectFit: "cover",
+          }}
+          width="500"
+        />
+      </div>
+    </div>
   )
 }
