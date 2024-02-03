@@ -1,8 +1,8 @@
+"use client"
 
 import { getUser } from "@/app/actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import {
   Card,
   CardContent,
@@ -13,15 +13,83 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { redirect } from "next/navigation"
+import { useEffect, useState } from "react"
 
-export default async function AccountPage() {
-  const user = await getUser()
+export default function AccountPage() {
+  const [user, setUser] = useState<any>()
+  const [userData, setUserData] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState({
+    name: "",
+    age: "",
+    address: "",
+  })
+  const { toast } = useToast()
+  const supabase = createClientComponentClient()
+
+  const fetchUser = async () => {
+    const user = await getUser()
+    if (!user) redirect("/login")
+    setUser(user)
+  }
+
+  async function getUserProfile() {
+    if (!user) return
+
+    const { data } = await supabase
+      .from("user")
+      .select()
+      .eq("email", user.user_metadata.email)
+
+    setUserData(data)
+  }
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+  useEffect(() => {
+    getUserProfile()
+  }, [user])
+
+  useEffect(() => {
+    if (!userData) return
+    setData({
+      name: userData.name,
+      age: userData.age,
+      address: userData.address,
+    })
+  }, [userData])
+
+  async function updateUser(e: any) {
+    e.preventDefault()
+    if (!user) return
+
+    const userDataProps = {
+      auth_id: user.id,
+      name: data.name,
+      age: Number(data.age),
+      address: data.address,
+      email: user.user_metadata.email,
+      avatar: user.user_metadata.avatar_url,
+    }
+
+    const { data: userRes, error } = await supabase
+      .from("user")
+      .insert([userDataProps])
+
+    if (userRes) {
+      toast({
+        title: "Data updated successfully",
+        variant: "success",
+      })
+      redirect("/service")
+    }
+  }
 
   return (
     <main className="flex flex-col w-full lg:flex-row gap-6 p-6">
@@ -32,44 +100,102 @@ export default async function AccountPage() {
             <CardDescription>Update your profile information.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Enter your name" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="age">Age</Label>
-              <Input id="age" placeholder="Enter your age" type="number" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="dob" className="mx-2">
-                Date of Birth
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    className="pl-3 text-left font-normal text-gray-500 dark:text-gray-400"
-                    variant="outline"
-                  >
-                    Pick a date
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="w-auto p-0">
-                  <Calendar mode="single" />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="address">Address</Label>
-              <Textarea
-                className="min-h-[100px]"
-                id="address"
-                placeholder="Enter your address"
-              />
-            </div>
+            <form onSubmit={updateUser}>
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Enter your name"
+                  value={data.name}
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="age">Age</Label>
+                <Input
+                  id="age"
+                  placeholder="Enter your age"
+                  type="number"
+                  value={data.age}
+                  onChange={(e) => setData({ ...data, age: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+                <Textarea
+                  className="resize-none min-h-[100px]"
+                  id="address"
+                  placeholder="Enter your address"
+                  value={data.address}
+                  onChange={(e) =>
+                    setData({ ...data, address: e.target.value })
+                  }
+                />
+              </div>
+              <CardFooter>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full my-4"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      Update
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-dasharray="60"
+                            stroke-dashoffset="60"
+                            stroke-opacity=".3"
+                            d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"
+                          >
+                            <animate
+                              fill="freeze"
+                              attributeName="stroke-dashoffset"
+                              dur="1.3s"
+                              values="60;0"
+                            />
+                          </path>
+                          <path
+                            stroke-dasharray="15"
+                            stroke-dashoffset="15"
+                            d="M12 3C16.9706 3 21 7.02944 21 12"
+                          >
+                            <animate
+                              fill="freeze"
+                              attributeName="stroke-dashoffset"
+                              dur="0.3s"
+                              values="15;0"
+                            />
+                            <animateTransform
+                              attributeName="transform"
+                              dur="1.5s"
+                              repeatCount="indefinite"
+                              type="rotate"
+                              values="0 12 12;360 12 12"
+                            />
+                          </path>
+                        </g>
+                      </svg>
+                    </div>
+                  ) : (
+                    <div>Create</div>
+                  )}
+                </Button>
+              </CardFooter>
+            </form>
           </CardContent>
-          <CardFooter>
-            <Button className="ml-auto">Save</Button>
-          </CardFooter>
         </Card>
       </section>
       <section className="w-full lg:w-1/2">
@@ -99,6 +225,5 @@ export default async function AccountPage() {
         </Card>
       </section>
     </main>
-  )
+  )
 }
-

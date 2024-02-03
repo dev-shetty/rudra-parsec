@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import Navbar from "@/components/Pots/Navbar";
+"use client"
+import Navbar from "@/components/Pots/Navbar"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+import React from "react"
 
 const CardData = [
   {
@@ -27,20 +27,27 @@ const CardData = [
     members: ["Name 1", "Name 2", "Name 3", "Name 1"],
     month: "9 / 11",
   },
-];
+  {
+    id: 1,
+    amount: "1000",
+    pot_id: "pot_brlozecf4",
+    members: ["Name 1", "Name 2", "Name 3", "Name 1"],
+    month: "9 / 11",
+  },
+]
 
 const page = () => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
 
-    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`;
-  };
+    e.currentTarget.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffffff18, transparent)`
+  }
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.background = "#d1f2f900";
-  };
+    e.currentTarget.style.background = "#d1f2f900"
+  }
 
   return (
     <div className="py-36 min-h-screen">
@@ -95,7 +102,7 @@ const page = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default page;
+export default page

@@ -1,6 +1,7 @@
 "use client"
 
 import { getUser } from "@/app/actions"
+import { Button } from "@/components/ui/button"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { redirect } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -11,12 +12,14 @@ export default function JoinPot({
   searchParams: { pot_code: string }
 }) {
   const [pot, setPot] = useState<any>(null)
+  const [user, setUser] = useState<any>(null)
   const [potMembers, setPotMembers] = useState<any[]>([])
   const { pot_code } = searchParams
 
   const fetchUser = async () => {
     const user = await getUser()
     if (!user) redirect("/login")
+    setUser(user)
   }
 
   useEffect(() => {
@@ -43,6 +46,15 @@ export default function JoinPot({
     }
   }
 
+  async function joinpot() {
+    if (pot.members.includes(user.id)) {
+      alert("You are already a member of this pot")
+      return
+    }
+    await supabase.from("pot").update({ members: [...pot.members, user.id] })
+    redirect("/pot/dashboard")
+  }
+
   console.log({ pot })
 
   return !pot ? (
@@ -54,8 +66,9 @@ export default function JoinPot({
       <p>Amount per head: {pot.amount_per_head}</p>
       <p>Goal Amount: {pot.goal_amount}</p>
       <p>Purpose: {pot.purpose}</p>
+      <p>Total months: {pot.total_members}</p>
       <p></p>
-      <div></div>
+      <Button onClick={joinpot}>Join Pot</Button>
     </main>
   )
 }
