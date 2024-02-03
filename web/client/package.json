@@ -6,10 +6,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@radix-ui/number": "^1.0.1",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
@@ -33,10 +36,12 @@
     "react-dom": "18.2.0",
     "react-parallax-tilt": "^1.7.209",
     "react-scroll": "^1.9.0",
+    "react-hook-form": "^7.50.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "20.11.5",
