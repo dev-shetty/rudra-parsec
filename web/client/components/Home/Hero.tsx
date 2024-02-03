@@ -14,7 +14,7 @@ const Hero = () => {
   };
 
   return (
-    <main className="hero flex px-8 justify-center items-center min-h-screen">
+    <main className="hero flex px-8 justify-center items-center my-40">
       <div className="absolute top-0 left-0 right-0">
         <div className="absolute left-50 top-50 -z-10 overflow-visible opacity-20">
           <div className="-z-10 h-[600px] md:w-[500px] rounded-full bg-white/20 mix-blend-multiply blur-[128px]" />
@@ -37,9 +37,14 @@ const Hero = () => {
               },
             }}
           >
-            <div className="text-6xl sm:text-8xl font-semibold">
+            <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
+              <div className="text-7xl font-semibold">
+                Finvest<span className="magicText">.</span>
+              </div>
+            </motion.h1>
+            <div className="text-5xl mt-5 font-semibold">
               <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
-                Emerge <span className="magicText">Financially</span> Fulfilled.
+                Emerge Financially<span className="magicText"> Fulfilled</span>.
               </motion.h1>
             </div>
             {/* <div className="mt-3 md:text-lg md:leading-8 leading-6 text-primary/50">
