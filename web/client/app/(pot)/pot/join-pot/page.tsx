@@ -60,8 +60,6 @@ export default function JoinPot({
         isCreator: pot.creator === user.auth_id,
       }))!
     })
-
-    console.log(potMembers)
   }
 
   async function joinpot() {
@@ -72,8 +70,6 @@ export default function JoinPot({
     await supabase.from("pot").update({ members: [...pot.members, user.id] })
     redirect("/pot/dashboard")
   }
-
-  console.log({ pot })
 
   return !pot ? (
     <div>Loading...</div>
