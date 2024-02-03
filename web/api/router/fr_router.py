@@ -12,7 +12,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 counter = 0
 face_match = False
-reference_img = cv2.imread("web/api/assets/akkil.jpg")
+reference_img = cv2.imread("./web/api/assets/akkil.jpg")
 
 def check_face(frame):
     global face_match

@@ -9,6 +9,6 @@ router = APIRouter()
 
 
 # Home
-@router.get("/")
-async def test(request: Request):
-    return None
+# @router.get("/")
+# async def home(request: Request):
+#     return {'Finvest': 'Welcome to Finvest API', 'ping': True}
