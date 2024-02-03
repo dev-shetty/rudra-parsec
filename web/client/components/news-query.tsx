@@ -47,7 +47,7 @@ export default function NewsQuery({ domain }: { domain?: NewsDomains }) {
 
   return (
     <div className="flex gap-4 my-4">
-      <Select onValueChange={(e) => router.push(`/news?domain=${e}`)}>
+      <Select onValueChange={(e: string) => router.push(`/news?domain=${e}`)}>
         <SelectTrigger className="w-[300px]">
           <SelectValue placeholder={domain ?? "Indian Finance"} />
         </SelectTrigger>

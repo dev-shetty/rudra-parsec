@@ -4,8 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.moneycontrol.com",
-        pathname: "/*",
+        hostname: "**",
       },
     ],
   },

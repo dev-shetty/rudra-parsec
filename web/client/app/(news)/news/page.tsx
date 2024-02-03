@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 
 import { NewsApiResponse, NewsDomains } from "@/lib/types"
+import Image from "next/image"
 import Link from "next/link"
 
 type SearchParams = {
@@ -46,7 +47,7 @@ export default async function TrendingNews({ searchParams }: SearchParams) {
         {news.articles.map((article) => (
           <div className="group h-max" key={article.url}>
             <Card>
-              <img
+              <Image
                 alt={article.title}
                 className="w-full h-48 object-cover"
                 height="200"
