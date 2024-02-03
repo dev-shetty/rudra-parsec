@@ -4,7 +4,7 @@ import cv2
 import threading
 from deepface import DeepFace
 
-app = APIRouter()
+router = APIRouter()
 
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -25,7 +25,7 @@ def check_face(frame):
     except ValueError:
         face_match = False
 
-@app.get("/video_feed")
+@router.get("/video_feed")
 async def video_feed():
     return StreamingResponse(generate_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
 
@@ -50,6 +50,6 @@ def generate_frames():
             yield (b"--frame\r\n"
                    b"Content-Type: image/jpeg\r\n\r\n" + frame_bytes + b"\r\n")
 
-@app.on_event("shutdown")
+@router.on_event("shutdown")
 def shutdown_event():
     cap.release()

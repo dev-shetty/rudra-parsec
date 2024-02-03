@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 
 import router.app_router as app_router
+import router.fr_router as fr_router
 
 app = FastAPI(
     title="Finvest API",
@@ -31,6 +32,7 @@ app.add_middleware(
 )
 
 app.include_router(app_router.router, prefix="/api/v1")
+app.include_router(fr_router.router, prefix="/api/v1/fr")
 
 # Home
 @app.get("/")
