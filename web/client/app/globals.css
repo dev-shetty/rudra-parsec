@@ -4,39 +4,54 @@
 
 @layer base {
   :root {
-    --background: 200 20% 98%;
-    --btn-background: 200 10% 91%;
-    --btn-background-hover: 200 10% 89%;
-    --foreground: 200 50% 3%;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: 200 50% 3%;
-      --btn-background: 200 10% 9%;
-      --btn-background-hover: 200 10% 12%;
-      --foreground: 200 20% 96%;
-    }
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.5rem;
   }
 }
 
-@layer base {
-  * {
-    @apply border-foreground/20;
-  }
+.magicText {
+  --purple: #0390cf;
+  --violet: #df8175;
+  --pink: #fbdbb8;
+  animation: background-pan 3s linear infinite;
+  background: linear-gradient(
+    to right,
+    var(--purple),
+    var(--violet),
+    var(--pink),
+    var(--purple)
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  /* font-size: 40px; */
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
 }
 
-.animate-in {
-  animation: animateIn 0.3s ease 0.15s both;
-}
-
-@keyframes animateIn {
+@keyframes background-pan {
   from {
-    opacity: 0;
-    transform: translateY(10px);
+    background-position: 0% center;
   }
+
   to {
-    opacity: 1;
-    transform: translateY(0);
+    background-position: -200% center;
   }
 }
