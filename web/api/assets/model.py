@@ -10,5 +10,4 @@ class NewsGen(BaseModel):
 class SendMessage(BaseModel):
     due: str
     pot: str
-    date: str
     phone: str

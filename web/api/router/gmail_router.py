@@ -4,7 +4,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from assets.model import Email
-from config import *
+from dotenv import dotenv_values
+env = dotenv_values('.env')
 
 router = APIRouter()
 
@@ -12,12 +13,12 @@ async def send_email(subject, body, to_email):
     try:
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587 
-        smtp_username = EMAIL
-        smtp_password = EMAIL_PASS
+        smtp_username = 'srujanrai17@gmail.com'
+        smtp_password = env.get('EMAIL_PASS')
         recipient_email = to_email
 
         message = MIMEMultipart()
-        message['From'] = EMAIL
+        message['From'] = 'srujanrai17@gmail.com'
         message['To'] = recipient_email
         message['Subject'] = subject
         message.attach(MIMEText(body, 'plain'))

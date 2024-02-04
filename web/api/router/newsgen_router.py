@@ -6,8 +6,10 @@ from gtts import gTTS
 import google.generativeai as palm
 from config import *
 from assets.model import NewsGen
+from dotenv import dotenv_values
+env = dotenv_values('.env')
 
-palm.configure(api_key='AIzaSyC5ybtTFJqL05pyHffcdr6PJ4OTms0fNaA') #PALM_API_KEY)
+palm.configure(api_key=env.get('PALM_API_KEY'))
 
 models = [m for m in palm.list_models() if 'generateText' in m.supported_generation_methods]
 model = models[0].name
