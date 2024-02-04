@@ -67,24 +67,46 @@
 
 // export default Navbar;
 
-"use client";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import Image from "next/image";
+"use client"
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "../ui/button"
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { getUser } from "@/app/actions"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { redirect } from "next/navigation"
+import { ChangeEvent, useEffect, useState } from "react"
 
 interface Profile {
-  name: string;
-  bio: string;
-  imageUrl: string;
-  links: string[];
-  userOwner: string | null;
-  username: string | null;
+  name: string
+  bio: string
+  imageUrl: string
+  links: string[]
+  userOwner: string | null
+  username: string | null
 }
 
-function Navbar() {
-  const [existingProfile, setExistingProfile] = useState();
+export default function Navbar() {
+  const [existingProfile, setExistingProfile] = useState()
+
+  const [user, setUser] = useState<any>(null)
+
+  const fetchUser = async () => {
+    const user = await getUser()
+    if (!user) setUser(null)
+    setUser(user)
+  }
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+  const supabase = createClientComponentClient()
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    setUser(null)
+  }
 
   return (
     <nav className="fixed w-full z-50 backdrop-blur-md flex items-center top-0 py-5 px-8">
@@ -106,10 +128,8 @@ function Navbar() {
             </svg>
           </p>
         </Link>
-        {existingProfile ? (
-          <Link href="/admin">
-            <Button>My Face</Button>
-          </Link>
+        {user ? (
+          <Button onClick={signOut}>Sign out</Button>
         ) : (
           <div className="flex gap-x-3">
             <Link href="/login">
@@ -119,7 +139,5 @@ function Navbar() {
         )}
       </div>
     </nav>
-  );
+  )
 }
-
-export default Navbar;

@@ -1,27 +1,22 @@
-import { GeistSans } from "geist/font/sans";
-import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
-import Footer from "@/components/Home/Footer";
-import { Metadata } from "next";
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+import Footer from "@/components/Home/Footer"
+import { Toaster } from "@/components/ui/toaster"
+import { GeistSans } from "geist/font/sans"
+import { Metadata } from "next"
+import "./globals.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL(defaultUrl),
   title: {
     default: "Finvest",
     template: `%s | Finvest`,
   },
   description: "Finvest: Emerge Financially Fulfilled.",
   keywords: ["financial education", "pots", "invest together"],
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en" className={GeistSans.className}>
@@ -33,5 +28,5 @@ export default function RootLayout({
         </main>
       </body>
     </html>
-  );
+  )
 }

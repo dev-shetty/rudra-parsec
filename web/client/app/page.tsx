@@ -1,7 +1,7 @@
-import Hero from "@/components/Home/Hero";
-import Navbar from "@/components/Home/Navbar";
-import Cards from "@/components/Home/Service";
-import Description from "@/components/Home/Description";
+import Description from "@/components/Home/Description"
+import Hero from "@/components/Home/Hero"
+import Navbar from "@/components/Home/Navbar"
+import Cards from "@/components/Home/Service"
 
 export default async function Index() {
   return (
@@ -11,5 +11,5 @@ export default async function Index() {
       <Description />
       <Cards />
     </div>
-  );
+  )
 }

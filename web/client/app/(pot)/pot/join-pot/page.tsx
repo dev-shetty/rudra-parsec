@@ -3,7 +3,7 @@
 import { getUser } from "@/app/actions"
 import { Button } from "@/components/ui/button"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { redirect } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function JoinPot({
@@ -15,11 +15,12 @@ export default function JoinPot({
   const [user, setUser] = useState<any>(null)
   const [potMembers, setPotMembers] = useState<any[]>([])
   const { pot_code } = searchParams
+  const router = useRouter()
 
   const fetchUser = async () => {
-    const user = await getUser()
-    if (!user) redirect("/login")
-    setUser(user)
+    const _user = await getUser()
+    if (!_user) router.push("/login")
+    setUser(_user)
   }
 
   useEffect(() => {

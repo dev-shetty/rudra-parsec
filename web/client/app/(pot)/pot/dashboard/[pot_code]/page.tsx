@@ -1,111 +1,114 @@
-"use client";
-import { motion, useInView } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+"use client"
+import { motion, useInView } from "framer-motion"
+import React, { useEffect, useRef, useState } from "react"
 
-import { getUser } from "@/app/actions";
-import { Badge } from "@/components/ui/badge";
-import { Calendar } from "@/components/ui/calendar";
-import { Progress } from "@/components/ui/progress";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import Navbar from "@/components/Navbar";
+import { getUser } from "@/app/actions"
+import Navbar from "@/components/Navbar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Progress } from "@/components/ui/progress"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import Link from "next/link"
+import { redirect, useRouter } from "next/navigation"
 
 const Page = ({ params }: { params: { pot_code: string } }) => {
-  const { pot_code } = params;
+  const { pot_code } = params
 
-  const [pot, setPot] = useState<any>(null);
-  const [user, setUser] = useState<any>(null);
-  const [potMembers, setPotMembers] = useState<any[]>([]);
+  const [pot, setPot] = useState<any>(null)
+  const [user, setUser] = useState<any>(null)
+  const [potMembers, setPotMembers] = useState<any[]>([])
+
+  const router = useRouter()
 
   const fetchUser = async () => {
-    const _user = await getUser();
-    if (!_user) redirect("/login");
-    setUser(_user);
-  };
+    const _user = await getUser()
+    if (!_user) router.push("/login")
+    setUser(_user)
+  }
 
   useEffect(() => {
-    fetchUser();
-    getPot();
-  }, []);
+    fetchUser()
+    getPot()
+  }, [])
 
   useEffect(() => {
-    getMembers();
-  }, [pot]);
+    getMembers()
+  }, [pot])
 
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient()
 
   async function getPot() {
     const { data, error } = await supabase
       .from("pot")
       .select("*")
       .eq("pot_code", pot_code)
-      .single();
-    setPot(data);
+      .single()
+    setPot(data)
 
     if (error) {
-      redirect("/pot");
+      redirect("/pot")
     }
   }
 
   async function getMembers() {
-    if (!pot) return;
+    if (!pot) return
     const { data, error } = await supabase
       .from("user")
       .select()
-      .in("auth_id", pot.members);
+      .in("auth_id", pot.members)
 
     setPotMembers(() => {
       return data?.map((user) => ({
         name: user.name,
         email: user.email,
         isCreator: pot.creator === user.auth_id,
-      }))!;
-    });
+      }))!
+    })
   }
-  console.log({ pot, potMembers });
+  console.log({ pot, potMembers })
 
-  const [rupeesPerMonth, setRupeesPerMonth] = useState(1000);
-  const [potCode, setPotCode] = useState("");
-  const [potPurpose, setPotPurpose] = useState("");
-  const [monthsRemaining, setMonthsRemaining] = useState(5);
-  const [totalMembers, setTotalMembers] = useState(5);
-  const [nextPerson, setNextPerson] = useState("Srajan Kumar");
-  const [goalAmount, setGoalAmount] = useState(10000);
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [progress, setProgress] = useState(13);
-
-  useEffect(() => {
-    if (!pot) return;
-    setRupeesPerMonth(pot.amount_per_head);
-    setMonthsRemaining(Number(pot.amount_paid / pot.total_members));
-    setTotalMembers(pot.total_members);
-    setGoalAmount(pot.goal_amount);
-    setProgress(50);
-    setPotCode(pot.pot_code);
-    setPotPurpose(pot.purpose);
-  }, [pot]);
+  const [rupeesPerMonth, setRupeesPerMonth] = useState(1000)
+  const [potCode, setPotCode] = useState("")
+  const [potPurpose, setPotPurpose] = useState("")
+  const [monthsRemaining, setMonthsRemaining] = useState(5)
+  const [totalMembers, setTotalMembers] = useState(5)
+  const [nextPerson, setNextPerson] = useState("Srajan Kumar")
+  const [goalAmount, setGoalAmount] = useState(10000)
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [progress, setProgress] = useState(13)
 
   useEffect(() => {
-    if (!pot || !potMembers) return;
-    setNextPerson(potMembers[0].name ?? "");
-  }, [potMembers]);
+    if (!pot) return
+    setRupeesPerMonth(pot.amount_per_head)
+    setMonthsRemaining(Number(pot.amount_paid / pot.total_members))
+    setTotalMembers(pot.total_members)
+    setGoalAmount(pot.goal_amount)
+    setProgress(0)
+    setPotCode(pot.pot_code)
+    setPotPurpose(pot.purpose)
+  }, [pot])
 
-  const ref = React.useRef(null);
-  const isInView = useInView(ref) as boolean;
+  useEffect(() => {
+    if (!pot || !potMembers) return
+    setNextPerson(potMembers[0].name ?? "")
+  }, [potMembers])
+
+  const ref = React.useRef(null)
+  const isInView = useInView(ref) as boolean
 
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
   const FADE_UP_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
   return (
-    <div className="flex justify-center items-center min-h-[100dvh]">
+    <div className="w-5/6 mx-auto flex justify-center items-center min-h-[100dvh]">
       <Navbar />
       <motion.div
         className="container max-w-7xl w-full lg:my-0 my-20 relative flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
@@ -154,6 +157,8 @@ const Page = ({ params }: { params: { pot_code: string } }) => {
                   <div className="py-2 md:mb-0 mb-5 px-3 w-full border border-input flex justify-center items-center rounded-md">
                     Goal Amount: ₹{goalAmount}
                   </div>
+
+                  <Button>Pay ₹{rupeesPerMonth}</Button>
                 </form>
               </div>
             </div>
@@ -191,7 +196,7 @@ const Page = ({ params }: { params: { pot_code: string } }) => {
         </motion.h1>
       </motion.div>
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
