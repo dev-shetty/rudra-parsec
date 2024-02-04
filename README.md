@@ -21,6 +21,8 @@ Empowering financial wisdom through education, engagement, and collaborative sav
 
 -->
 
+### YouTube Video - [Click here](https://youtu.be/qlFmWZJUNcc)
+
 ## Tech Stacks
 
 ![Next.js](https://img.shields.io/badge/Next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
