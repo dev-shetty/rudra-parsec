@@ -1,20 +1,14 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
-import { motion, useInView } from "framer-motion"
 import { Copy } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import React, { useEffect, useRef, useState } from "react"
 
-export default function Page() {
-  const searchParams = useSearchParams()
-  const potCode = searchParams.get("pot_code")
-  const ref = useRef(null)
-  const isInView = useInView(ref) as boolean
-  const { toast } = useToast()
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { pot_code: string }
+}) {
+  const { pot_code } = searchParams
 
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -20 },
@@ -29,33 +23,15 @@ export default function Page() {
   const handleCopyId = () => {
     const tempInput = document.createElement("input")
     document.body.appendChild(tempInput)
-    tempInput.value = potCode ?? ""
+    tempInput.value = pot_code ?? ""
     tempInput.select()
     document.execCommand("copy")
     document.body.removeChild(tempInput)
-    toast({
-      title: "ID Copied",
-      variant: "success",
-    })
   }
 
   return (
-    <motion.div
-      className="container bg-black relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
-      initial="hidden"
-      ref={ref}
-      animate={isInView ? "show" : "hidden"}
-      viewport={{ once: true }}
-      variants={{
-        hidden: {},
-        show: {
-          transition: {
-            staggerChildren: 0.15,
-          },
-        },
-      }}
-    >
-      <motion.h1 variants={FADE_UP_ANIMATION_VARIANTS}>
+    <div className="container bg-black relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <h1>
         <div className="lg:p-8">
           <div className="fixed top-0 left-0 m-5 z-50">
             <Link href="/create-pot">
@@ -69,7 +45,7 @@ export default function Page() {
 
               <div className="flex relative items-center">
                 <div className="py-2 min-h-10 px-3 w-full border border-input rounded-md">
-                  {potCode}
+                  {pot_code}
                 </div>
                 <Button
                   variant={"ghost"}
@@ -90,9 +66,9 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </motion.h1>
+      </h1>
       <div className="relative hidden h-full bg-black flex-col text-white lg:flex">
-        <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
+        <h1>
           <Image
             quality={100}
             priority
@@ -102,8 +78,8 @@ export default function Page() {
             height={500}
             alt="login-image"
           ></Image>
-        </motion.h1>
+        </h1>
       </div>
-    </motion.div>
+    </div>
   )
 }
