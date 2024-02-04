@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { getUser } from "@/app/actions";
-import Navbar from "@/components/Navbar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { getUser } from "@/app/actions"
+import Navbar from "@/components/Navbar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -11,65 +11,66 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { redirect, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function AccountPage() {
-  const [user, setUser] = useState<any>();
-  const [userData, setUserData] = useState<any>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<any>()
+  const [userData, setUserData] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState({
     name: "",
     age: "",
     address: "",
-  });
-  const { toast } = useToast();
-  const supabase = createClientComponentClient();
+  })
+  const { toast } = useToast()
+  const supabase = createClientComponentClient()
+  const router = useRouter()
 
   const fetchUser = async () => {
-    const user = await getUser();
-    if (!user) redirect("/login");
-    setUser(user);
-  };
+    const _user = await getUser()
+    if (!_user) router.push("/login")
+    setUser(_user)
+  }
 
   async function getUserProfile() {
-    if (!user) return;
+    if (!user) return
 
     const { data } = await supabase
       .from("user")
       .select()
-      .eq("email", user.user_metadata.email);
+      .eq("email", user.user_metadata.email)
 
-    setUserData(data);
+    setUserData(data)
   }
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchUser()
+  }, [])
 
   useEffect(() => {
-    getUserProfile();
-  }, [user]);
+    getUserProfile()
+  }, [user])
 
   useEffect(() => {
-    if (!userData) return;
+    if (!userData) return
     setData({
       name: userData.name,
       age: userData.age,
       address: userData.address,
-    });
-  }, [userData]);
+    })
+  }, [userData])
 
   async function updateUser(e: any) {
-    e.preventDefault();
-    setIsLoading(true);
-    if (!user) return;
+    e.preventDefault()
+    setIsLoading(true)
+    if (!user) return
 
     const userDataProps = {
       auth_id: user.id,
@@ -78,26 +79,18 @@ export default function AccountPage() {
       address: data.address,
       email: user.user_metadata.email,
       avatar: user.user_metadata.avatar_url,
-    };
+    }
 
     const { data: userRes, error } = await supabase
       .from("user")
-      .insert([userDataProps]);
+      .insert([userDataProps])
 
-    if (userRes) {
-      toast({
-        title: "Data updated successfully",
-        variant: "success",
-      });
-      window.location.href = "/service";
-    } else {
-      setIsLoading(false);
-      toast({
-        title: "Error!",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-    }
+    setIsLoading(false)
+    toast({
+      title: "Data updated successfully",
+      variant: "success",
+    })
+    router.push("/service")
   }
 
   return (
@@ -250,5 +243,5 @@ export default function AccountPage() {
         </div>
       </main>
     </div>
-  );
+  )
 }

@@ -93,7 +93,7 @@ export default function Navbar() {
 
   const fetchUser = async () => {
     const user = await getUser()
-    if (!user) redirect("/login")
+    if (!user) setUser(null)
     setUser(user)
   }
 

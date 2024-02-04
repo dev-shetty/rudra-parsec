@@ -1,3 +1,4 @@
+import CopyButton from "@/components/copy-button"
 import { Button } from "@/components/ui/button"
 import { Copy } from "lucide-react"
 import Image from "next/image"
@@ -20,15 +21,6 @@ export default function Page({
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
   }
 
-  const handleCopyId = () => {
-    const tempInput = document.createElement("input")
-    document.body.appendChild(tempInput)
-    tempInput.value = pot_code ?? ""
-    tempInput.select()
-    document.execCommand("copy")
-    document.body.removeChild(tempInput)
-  }
-
   return (
     <div className="container bg-black relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <h1>
@@ -47,13 +39,7 @@ export default function Page({
                 <div className="py-2 min-h-10 px-3 w-full border border-input rounded-md">
                   {pot_code}
                 </div>
-                <Button
-                  variant={"ghost"}
-                  onClick={handleCopyId}
-                  className="w-10 p-3 absolute right-0"
-                >
-                  <Copy className="w-10 h-10" />
-                </Button>
+                <CopyButton value={pot_code} />
               </div>
 
               <p className="text-sm text-primary/50">

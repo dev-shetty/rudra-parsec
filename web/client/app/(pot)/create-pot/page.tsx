@@ -22,9 +22,9 @@ export default function Page() {
   const { toast } = useToast()
 
   const fetchUser = async () => {
-    const user = await getUser()
-    if (!user) redirect("/login")
-    setUser(user)
+    const _user = await getUser()
+    if (!_user) router.push("/login")
+    setUser(_user)
   }
 
   useEffect(() => {
