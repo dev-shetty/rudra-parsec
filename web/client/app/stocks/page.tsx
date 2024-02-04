@@ -79,13 +79,9 @@
 
 // pages/StockMarket/Dashboard.tsx
 
-"use client";
+"use client"
 // pages/index.tsx
-import { CardsMetric } from "@/components/Stocks/CardsMetrix";
-
-export const metadata = {
-  title: "Stocks"
-}
+import { CardsMetric } from "@/components/Stocks/CardsMetrix"
 
 const HomePage: React.FC = () => {
   const stockData = [
@@ -96,7 +92,7 @@ const HomePage: React.FC = () => {
     { average: 189, today: 480 },
     { average: 239, today: 380 },
     { average: 349, today: 430 },
-  ];
+  ]
 
   return (
     <div>
@@ -107,7 +103,7 @@ const HomePage: React.FC = () => {
         data={stockData}
       />
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

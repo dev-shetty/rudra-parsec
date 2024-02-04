@@ -1,32 +1,32 @@
+"use client"
 // components/CardsMetric.tsx
-import { useTheme } from "next-themes";
-("use client");
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
-import { useConfig } from "@/hooks/use-config";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { themes } from "@/components/ui/themes";
+} from "@/components/ui/card"
+import { themes } from "@/components/ui/themes"
+import { useConfig } from "@/hooks/use-config"
+import { useTheme } from "next-themes"
+import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts"
 
 interface StockData {
-  average: number;
-  today: number;
+  average: number
+  today: number
 }
 
 interface CardsMetricProps {
-  title: string;
-  description: string;
-  data: StockData[];
+  title: string
+  description: string
+  data: StockData[]
 }
 
 export function CardsMetric({ title, description, data }: CardsMetricProps) {
-  const { theme: mode } = useTheme();
-  const [config] = useConfig();
-  const theme = themes.find((theme) => theme.name === config.theme);
+  const { theme: mode } = useTheme()
+  const [config] = useConfig()
+  const theme = themes.find((theme) => theme.name === config.theme)
 
   return (
     <Card>
@@ -70,10 +70,10 @@ export function CardsMetric({ title, description, data }: CardsMetricProps) {
                           </div>
                         </div>
                       </div>
-                    );
+                    )
                   }
 
-                  return null;
+                  return null
                 }}
               />
               <Line
@@ -116,5 +116,5 @@ export function CardsMetric({ title, description, data }: CardsMetricProps) {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

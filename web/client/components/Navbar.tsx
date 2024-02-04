@@ -1,6 +1,4 @@
-"use client";
-import Link from "next/link";
-import { Button } from "./ui/button";
+"use client"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,21 +8,23 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/navigation-menu"
+import Link from "next/link"
+import { Button } from "./ui/button"
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react"
 
 interface Profile {
-  name: string;
-  bio: string;
-  imageUrl: string;
-  links: string[];
-  userOwner: string | null;
-  username: string | null;
+  name: string
+  bio: string
+  imageUrl: string
+  links: string[]
+  userOwner: string | null
+  username: string | null
 }
 
 function Navbar() {
-  const [existingProfile, setExistingProfile] = useState();
+  const [existingProfile, setExistingProfile] = useState()
 
   return (
     <nav className="fixed w-full top-0 left-0 z-50 backdrop-blur-md flex items-center py-5 px-8">
@@ -48,7 +48,7 @@ function Navbar() {
         </Link>
         {existingProfile ? (
           <Link href="/admin">
-            <Button>My Face</Button>
+            <Button>Logout</Button>
           </Link>
         ) : (
           <div className="flex gap-x-3 border border-input rounded-md">
@@ -99,7 +99,7 @@ function Navbar() {
         )}
       </div>
     </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

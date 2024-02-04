@@ -1,44 +1,44 @@
-"use client";
-import { getUser } from "@/app/actions";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { motion, useInView } from "framer-motion";
-import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+"use client"
+import { getUser } from "@/app/actions"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { useToast } from "@/components/ui/use-toast"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { motion, useInView } from "framer-motion"
+import Link from "next/link"
+import { redirect, useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
 
-const page = () => {
-  const [loading, isLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const router = useRouter();
+export default function Page() {
+  const [loading, isLoading] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const router = useRouter()
 
   function generateUniqueId() {
-    return `pot_${Math.random().toString(36).substr(2, 9)}`;
+    return `pot_${Math.random().toString(36).substr(2, 9)}`
   }
-  const [potCode, setPotCode] = useState(() => generateUniqueId());
-  const { toast } = useToast();
+  const [potCode, setPotCode] = useState(() => generateUniqueId())
+  const { toast } = useToast()
 
   const fetchUser = async () => {
-    const user = await getUser();
-    if (!user) redirect("/login");
-    setUser(user);
-  };
+    const user = await getUser()
+    if (!user) redirect("/login")
+    setUser(user)
+  }
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchUser()
+  }, [])
 
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
       creator: user?.user_metadata.name,
-    }));
-  }, [user]);
+    }))
+  }, [user])
 
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient()
 
   const [formData, setFormData] = useState({
     purpose: "",
@@ -46,26 +46,26 @@ const page = () => {
     numberOfMembers: "",
     goalAmount: "",
     amountPerHead: "",
-  });
+  })
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    isLoading(true);
+    e.preventDefault()
+    isLoading(true)
 
     if (
       Number(formData.numberOfMembers) < 2 ||
       Number(formData.numberOfMembers) > 20
     ) {
-      isLoading(false);
-      return alert("Number of members should be between 2 and 20");
+      isLoading(false)
+      return alert("Number of members should be between 2 and 20")
     }
 
     const potData = {
@@ -78,44 +78,44 @@ const page = () => {
       pot_code: generateUniqueId(),
       amount_paid: 0,
       members: [user.id],
-    };
+    }
 
-    console.log(potData);
+    console.log(potData)
     const { error, data } = await supabase
       .from("pot")
       .insert([potData])
-      .single();
+      .single()
     if (!error) {
       toast({
         title: "Pot created successfully",
         variant: "success",
-      });
+      })
       setFormData({
         purpose: "",
         creator: user?.user_metadata.name ?? "",
         numberOfMembers: "",
         goalAmount: "",
         amountPerHead: "",
-      });
-      router.push(`/create-pot/waiting?pot_code=${potCode}`);
+      })
+      router.push(`/create-pot/waiting?pot_code=${potCode}`)
     } else {
-      isLoading(false);
-      console.log(error);
+      isLoading(false)
+      console.log(error)
     }
-  };
+  }
 
-  const ref = React.useRef(null);
-  const isInView = useInView(ref) as boolean;
+  const ref = React.useRef(null)
+  const isInView = useInView(ref) as boolean
 
   const FADE_DOWN_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: -20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
 
   const FADE_UP_ANIMATION_VARIANTS = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", delay: 0.2 } },
-  };
+  }
   return (
     <motion.div
       className="container relative min-h-[100dvh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0"
@@ -280,7 +280,5 @@ const page = () => {
         </div>
       </motion.h1>
     </motion.div>
-  );
-};
-
-export default page;
+  )
+}
